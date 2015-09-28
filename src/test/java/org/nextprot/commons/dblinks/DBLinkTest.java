@@ -9,7 +9,7 @@ import org.junit.Test;
 public class DBLinkTest {
 
 	@Test
-	public void testDBLink() {
+	public void testEnsemblDBLink() {
 
 		String url = "http://some-uri-that-will-be-discared.org/";
 		String accession = "ENSG00000139618";
