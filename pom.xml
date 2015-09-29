@@ -6,7 +6,6 @@
 	<artifactId>nextprot-commons</artifactId>
 	<packaging>jar</packaging>
 	<version>0.2.6-SNAPSHOT</version>
-
 	<build>
 		<finalName>nextprot-commons</finalName>
 		<plugins>
