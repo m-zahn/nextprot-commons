@@ -5,7 +5,7 @@
 	<groupId>org.nextprot</groupId>
 	<artifactId>nextprot-commons</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2.4-SNAPSHOT</version>
+	<version>0.2.4</version>
 
 	<build>
 		<finalName>nextprot-commons</finalName>
