@@ -40,10 +40,16 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.nextprot</groupId>
+			<artifactId>nextprot-queries</artifactId>
+			<version>LATEST</version>
+		</dependency>
+        <dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-		</dependency>
+			<scope>test</scope>
+	    </dependency>
 	</dependencies>
 	
 	
