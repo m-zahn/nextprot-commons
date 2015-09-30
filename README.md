@@ -14,3 +14,7 @@ It contains classes shared between the loaders pipeline and the web API.
 If pom.xml says 0.3.1-SNAPSHOT and the command `nxs-fire-and-prepare-next-release.sh 0.3.2` is executed:
 * Jenkins will release 0.3.1
 * 0.3.2-SNAPSHOT will be created on the pom.xml 
+
+
+## Note 
+Never touch master branch, this is used by jenkins.
