@@ -1,6 +1,55 @@
 package org.nextprot.commons.statements;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class RawStatement {
+
+	public String getSeparatedValues(String separator){
+		
+		List<String> list = new ArrayList<>();
+		list.add(entry_accession);
+		list.add(gene_name);
+		list.add(isoform_accession);
+		list.add(annot_loc_begin_canonical_ref);
+		list.add(annot_loc_end_canonical_ref);
+		list.add(annot_loc_begin_genomic_ref);
+		list.add(annot_loc_end_genomic_ref);
+		list.add(annotation_category);
+		list.add(annot_cv_term_terminology);
+		list.add(annot_cv_term_name);
+		list.add(annot_cv_term_accession);
+		list.add(biological_object_type);
+		list.add(biological_object_accession);
+		list.add(biological_object_database);
+		list.add(annot_description);
+		list.add(getAnnot_hash()); // Careful with this one
+		list.add(annot_source_accession);
+		list.add(annot_source_database);
+		list.add(variant_origin);
+		list.add(variant_original_amino_acid);
+		list.add(variant_original_genomic);
+		list.add(variant_variation_genomic);
+		list.add(variant_name_synonym_genomic);
+		list.add(variant_name_synonym_protein);
+		list.add(variant_name_synonym_isoform);
+		list.add(variant_name_synonym_error);
+		list.add(modified_entry_name);
+		list.add(reference_annot_hash);
+		list.add(evidence_source_accession);
+		list.add(reference_pubmed);
+				
+		StringBuilder sb = new StringBuilder();
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			sb.append(it.next());
+			sb.append(separator);
+		}
+		return sb.toString();
+		
+	}
+
 
 	private String entry_accession;
 	private String gene_name;
@@ -221,5 +270,5 @@ public class RawStatement {
 	public void setReference_pubmed(String reference_pubmed) {
 		this.reference_pubmed = reference_pubmed;
 	}
-
+	
 }
