@@ -1,6 +1,7 @@
 package org.nextprot.commons.statements;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -204,10 +205,10 @@ public class RawStatement {
 		this.annot_description = annot_description;
 	}
 
-	public String getAnnot_hash() {
-		SortedSet<String> accessionCodes = new java.util.TreeSet<String>();
+	public String getAnnot_hash() throws NoSuchAlgorithmException {
 		StringBuffer payload = new StringBuffer();
-		//according to https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
+		// according to
+		// https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
 		payload.append(entry_accession);
 		payload.append(isoform_accession);
 		payload.append(annot_loc_begin_canonical_ref);
@@ -232,28 +233,29 @@ public class RawStatement {
 		payload.append(annot_cv_term_accession);
 		payload.append(annot_cv_term_name);
 
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(payload.toString().getBytes());
-        
-        byte byteData[] = md.digest();
- 
-        //convert the byte to hex format method 1
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < byteData.length; i++) {
-         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        }
-     
-        System.out.println("Digest(in hex format):: " + sb.toString());
-        
-        //convert the byte to hex format method 2
-        StringBuffer hexString = new StringBuffer();
-    	for (int i=0;i<byteData.length;i++) {
-    		String hex=Integer.toHexString(0xff & byteData[i]);
-   	     	if(hex.length()==1) hexString.append('0');
-   	     	hexString.append(hex);
-    	}
-    	
-    	return hexString.toString();
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(payload.toString().getBytes());
+
+		byte byteData[] = md.digest();
+
+		// convert the byte to hex format method 1
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < byteData.length; i++) {
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+		}
+
+		System.out.println("Digest(in hex format):: " + sb.toString());
+
+		// convert the byte to hex format method 2
+		StringBuffer hexString = new StringBuffer();
+		for (int i = 0; i < byteData.length; i++) {
+			String hex = Integer.toHexString(0xff & byteData[i]);
+			if (hex.length() == 1)
+				hexString.append('0');
+			hexString.append(hex);
+		}
+
+		return hexString.toString();
 	}
 
 	public String getAnnot_source_accession() {
