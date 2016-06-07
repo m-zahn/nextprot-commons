@@ -5,53 +5,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class RawStatement {
-
-	public String getSeparatedValues(String separator) {
-
-		List<String> list = new ArrayList<>();
-		list.add(entry_accession);
-		list.add(gene_name);
-		list.add(isoform_accession);
-		list.add(annot_loc_begin_canonical_ref);
-		list.add(annot_loc_end_canonical_ref);
-		list.add(annot_loc_begin_genomic_ref);
-		list.add(annot_loc_end_genomic_ref);
-		list.add(annotation_category);
-		list.add(annot_cv_term_terminology);
-		list.add(annot_cv_term_name);
-		list.add(annot_cv_term_accession);
-		list.add(biological_object_type);
-		list.add(biological_object_accession);
-		list.add(biological_object_database);
-		list.add(annot_description);
-		list.add(getAnnot_hash()); // Careful with this one
-		list.add(annot_source_accession);
-		list.add(annot_source_database);
-		list.add(variant_origin);
-		list.add(variant_original_amino_acid);
-		list.add(variant_original_genomic);
-		list.add(variant_variation_genomic);
-		list.add(variant_name_synonym_genomic);
-		list.add(variant_name_synonym_protein);
-		list.add(variant_name_synonym_isoform);
-		list.add(variant_name_synonym_error);
-		list.add(modified_entry_name);
-		list.add(reference_annot_hash);
-		list.add(evidence_source_accession);
-		list.add(reference_pubmed);
-
-		StringBuilder sb = new StringBuilder();
-		Iterator<String> it = list.iterator();
-		while (it.hasNext()) {
-			sb.append(it.next());
-			sb.append(separator);
-		}
-		return sb.toString();
-
-	}
 
 	private String entry_accession;
 	private String gene_name;
@@ -68,8 +26,13 @@ public class RawStatement {
 	private String biological_object_accession;
 	private String biological_object_database;
 	private String annot_description;
+	
+	private String biological_subject_annot_hash;
+	private String biological_object_annot_hash;
+
 	private String annot_hash;
-	private String annot_source_accession;
+	private String annot_name;
+
 	private String annot_source_database;
 	private String variant_origin;
 	private String variant_original_amino_acid;
@@ -81,7 +44,6 @@ public class RawStatement {
 	private String variant_name_synonym_isoform;
 	private String variant_name_synonym_error;
 	private String modified_entry_name;
-	private String reference_annot_hash;
 	private String evidence_source_accession;
 	private String reference_pubmed;
 
@@ -214,6 +176,7 @@ public class RawStatement {
 		payload.append(annot_loc_begin_canonical_ref);
 		payload.append(annot_loc_end_canonical_ref);
 		payload.append(annotation_category);
+		payload.append(annot_name);
 		payload.append(annot_cv_term_terminology);
 		payload.append(annot_cv_term_accession);
 		payload.append(annot_cv_term_name);
@@ -227,7 +190,10 @@ public class RawStatement {
 		payload.append(variant_original_genomic);
 		payload.append(variant_variation_genomic);
 		payload.append(modified_entry_name);
-		payload.append(reference_annot_hash);
+		
+		payload.append(biological_subject_annot_hash);
+		payload.append(biological_object_annot_hash);
+
 		payload.append(annotation_category);
 		payload.append(annot_cv_term_terminology);
 		payload.append(annot_cv_term_accession);
@@ -245,8 +211,6 @@ public class RawStatement {
 				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
 			}
 
-			System.out.println("Digest(in hex format):: " + sb.toString());
-
 			// convert the byte to hex format method 2
 			StringBuffer hexString = new StringBuffer();
 			for (int i = 0; i < byteData.length; i++) {
@@ -259,7 +223,7 @@ public class RawStatement {
 			return hexString.toString();
 
 		} catch (NoSuchAlgorithmException e) {
-			
+
 			throw new RuntimeException("Not possible to compute MD5");
 		}
 
@@ -361,14 +325,6 @@ public class RawStatement {
 		this.modified_entry_name = modified_entry_name;
 	}
 
-	public String getReference_annot_hash() {
-		return reference_annot_hash;
-	}
-
-	public void setReference_annot_hash(String reference_annot_hash) {
-		this.reference_annot_hash = reference_annot_hash;
-	}
-
 	public String getEvidence_source_accession() {
 		return evidence_source_accession;
 	}
@@ -385,4 +341,94 @@ public class RawStatement {
 		this.reference_pubmed = reference_pubmed;
 	}
 
+	private String annot_source_accession;
+
+	public String getAnnot_name() {
+		return annot_name;
+	}
+
+	public void setAnnot_name(String annot_name) {
+		this.annot_name = annot_name;
+	}
+
+	public String getSeparatedValues(String separator) {
+
+		List<String> list = new ArrayList<>();
+		list.add(entry_accession);
+		list.add(gene_name);
+		list.add(isoform_accession);
+
+		list.add(biological_subject_annot_hash);
+
+		list.add(annotation_category);
+		list.add(annot_cv_term_terminology);
+		list.add(annot_cv_term_name);
+		list.add(annot_cv_term_accession);
+
+		list.add(biological_object_type);
+		list.add(biological_object_accession);
+		list.add(biological_object_database);
+
+		list.add(biological_object_annot_hash);
+
+		list.add(annot_name); // This one was added
+		list.add(getAnnot_hash()); // Careful with this one
+		list.add(annot_description);
+
+		list.add(annot_loc_begin_canonical_ref);
+		list.add(annot_loc_end_canonical_ref);
+		list.add(annot_loc_begin_genomic_ref);
+		list.add(annot_loc_end_genomic_ref);
+
+		list.add(annot_source_accession);
+		list.add(annot_source_database);
+
+		list.add(variant_origin);
+		list.add(variant_original_amino_acid);
+		list.add(variant_variation_amino_acid);
+		list.add(variant_original_genomic);
+		list.add(variant_variation_genomic);
+		list.add(variant_name_synonym_genomic);
+		list.add(variant_name_synonym_protein);
+		list.add(variant_name_synonym_isoform);
+		list.add(variant_name_synonym_error);
+
+		list.add(modified_entry_name);
+		list.add(evidence_source_accession);
+		list.add(reference_pubmed);
+
+		StringBuilder sb = new StringBuilder();
+		Iterator<String> it = list.iterator();
+		while (it.hasNext()) {
+			sb.append(it.next());
+			sb.append(separator);
+		}
+		return sb.toString();
+
+	}
+
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	public String getBiological_subject_annot_hash() {
+		return biological_subject_annot_hash;
+	}
+
+	public void setBiological_subject_annot_hash(String biological_subject_annot_hash) {
+		this.biological_subject_annot_hash = biological_subject_annot_hash;
+	}
+
+	public String getBiological_object_annot_hash() {
+		return biological_object_annot_hash;
+	}
+
+	public void setBiological_object_annot_hash(String biological_object_annot_hash) {
+		this.biological_object_annot_hash = biological_object_annot_hash;
+	}
+	
 }
