@@ -167,7 +167,15 @@ public class RawStatement {
 		this.annot_description = annot_description;
 	}
 
+	public void setAnnot_hash(String annot_hash) {
+		this.annot_hash = annot_hash;
+	}
+
 	public String getAnnot_hash() {
+		if(annot_hash != null){
+			return annot_hash;
+		}
+			
 		StringBuffer payload = new StringBuffer();
 		// according to
 		// https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
