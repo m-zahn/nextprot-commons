@@ -1,42 +1,84 @@
 package org.nextprot.commons.statements;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class RawStatement {
 
+	@AnnotationUnicity
 	private String entry_accession;
+
 	private String gene_name;
+
+	@AnnotationUnicity
 	private String isoform_accession;
+
+	@AnnotationUnicity
 	private String annot_loc_begin_canonical_ref;
+
+	@AnnotationUnicity
 	private String annot_loc_end_canonical_ref;
+
 	private String annot_loc_begin_genomic_ref;
 	private String annot_loc_end_genomic_ref;
+
+	@AnnotationUnicity
 	private String annotation_category;
+
+	@AnnotationUnicity
 	private String annot_cv_term_terminology;
+
 	private String annot_cv_term_name;
+
+	@AnnotationUnicity
 	private String annot_cv_term_accession;
+
+	@AnnotationUnicity
 	private String biological_object_type;
+
+	@AnnotationUnicity
 	private String biological_object_accession;
+
+	@AnnotationUnicity
 	private String biological_object_database;
+
+	@AnnotationUnicity
 	private String annot_description;
-	
+
+	@AnnotationUnicity
 	private String biological_subject_annot_hash;
+
+	public String getExp_context_eco_detect_method() {
+		return exp_context_eco_detect_method;
+	}
+
+	public void setExp_context_eco_detect_method(String exp_context_eco_detect_method) {
+		this.exp_context_eco_detect_method = exp_context_eco_detect_method;
+	}
+
+	@AnnotationUnicity
 	private String biological_object_annot_hash;
 
-	private String annot_hash;
 	private String annot_name;
 
 	private String annot_source_database;
 	private String variant_origin;
+
+	@AnnotationUnicity
 	private String variant_original_amino_acid;
+
+	@AnnotationUnicity
 	private String variant_variation_amino_acid;
+
 	private String variant_original_genomic;
 	private String variant_variation_genomic;
 	private String variant_name_synonym_genomic;
@@ -46,6 +88,8 @@ public class RawStatement {
 	private String modified_entry_name;
 	private String evidence_source_accession;
 	private String reference_pubmed;
+	private String exp_context_property_intensity;
+	private String exp_context_eco_detect_method;
 
 	public String getEntry_accession() {
 		return entry_accession;
@@ -167,45 +211,42 @@ public class RawStatement {
 		this.annot_description = annot_description;
 	}
 
-	public void setAnnot_hash(String annot_hash) {
-		this.annot_hash = annot_hash;
-	}
-
 	public String getAnnot_hash() {
-		if(annot_hash != null){
-			return annot_hash;
-		}
-			
-		StringBuffer payload = new StringBuffer();
-		// according to
-		// https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
-		payload.append(entry_accession);
-		payload.append(isoform_accession);
-		payload.append(annot_loc_begin_canonical_ref);
-		payload.append(annot_loc_end_canonical_ref);
-		payload.append(annotation_category);
-		payload.append(annot_name);
-		payload.append(annot_cv_term_terminology);
-		payload.append(annot_cv_term_accession);
-		payload.append(annot_cv_term_name);
-		payload.append(biological_object_type);
-		payload.append(biological_object_accession);
-		payload.append(biological_object_database);
-		payload.append(annot_description);
-		payload.append(annotation_category);
-		payload.append(variant_original_amino_acid);
-		payload.append(variant_variation_amino_acid);
-		payload.append(variant_original_genomic);
-		payload.append(variant_variation_genomic);
-		payload.append(modified_entry_name);
-		
-		payload.append(biological_subject_annot_hash);
-		payload.append(biological_object_annot_hash);
 
-		payload.append(annotation_category);
-		payload.append(annot_cv_term_terminology);
-		payload.append(annot_cv_term_accession);
-		payload.append(annot_cv_term_name);
+		TreeSet<String> contentItems = new TreeSet<String>();
+		// https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
+
+		Field[] fields = RawStatement.class.getDeclaredFields();
+		for (Field f : fields) {
+
+			boolean isFieldUsedForAnnotationUnicity = false;
+			for (Annotation a : f.getAnnotations()) {
+				if (a.annotationType().equals(AnnotationUnicity.class)) {
+					isFieldUsedForAnnotationUnicity = true;
+					break;
+				}
+			}
+
+			if (isFieldUsedForAnnotationUnicity) {
+				try {
+					Object fieldValue = f.get(this);
+					if(fieldValue != null){
+						contentItems.add(fieldValue.toString());
+					};
+
+				} catch (IllegalArgumentException e) {
+					throw new RuntimeException("illegal argument");
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException("illegal access");
+				}
+			}
+		}
+
+		StringBuffer payload = new StringBuffer();
+		Iterator<String> icItemsIterator = contentItems.iterator();
+		while (icItemsIterator.hasNext()) {
+			payload.append(icItemsIterator.next());
+		}
 
 		MessageDigest md;
 		try {
@@ -235,6 +276,37 @@ public class RawStatement {
 			throw new RuntimeException("Not possible to compute MD5");
 		}
 
+	}
+
+	public static String[] getFieldNames(RawStatement object) {
+		List<String> fieldNames = new ArrayList<String>();
+		Field[] fields = RawStatement.class.getDeclaredFields();
+		for (Field f : fields) {
+			fieldNames.add(f.getName());
+		}
+		fieldNames.add("annot_hash");
+		return fieldNames.toArray(new String[0]);
+	}
+
+	public static String[] getFieldValues(RawStatement object) {
+		List<String> fieldValues = new ArrayList<String>();
+		Field[] fields = RawStatement.class.getDeclaredFields();
+		for (Field f : fields) {
+			try {
+				Object o = f.get(object);
+				if (o == null) {
+					fieldValues.add(null);
+				} else
+					fieldValues.add(f.get(object).toString());
+
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException("illegal argument");
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException("illegal access");
+			}
+		}
+		fieldValues.add(object.getAnnot_hash());
+		return fieldValues.toArray(new String[0]);
 	}
 
 	public String getAnnot_source_accession() {
@@ -359,66 +431,12 @@ public class RawStatement {
 		this.annot_name = annot_name;
 	}
 
-	public String getSeparatedValues(String separator) {
-
-		List<String> list = new ArrayList<>();
-		list.add(entry_accession);
-		list.add(gene_name);
-		list.add(isoform_accession);
-
-		list.add(biological_subject_annot_hash);
-
-		list.add(annotation_category);
-		list.add(annot_cv_term_terminology);
-		list.add(annot_cv_term_name);
-		list.add(annot_cv_term_accession);
-
-		list.add(biological_object_type);
-		list.add(biological_object_accession);
-		list.add(biological_object_database);
-
-		list.add(biological_object_annot_hash);
-
-		list.add(annot_name); // This one was added
-		list.add(getAnnot_hash()); // Careful with this one
-		list.add(annot_description);
-
-		list.add(annot_loc_begin_canonical_ref);
-		list.add(annot_loc_end_canonical_ref);
-		list.add(annot_loc_begin_genomic_ref);
-		list.add(annot_loc_end_genomic_ref);
-
-		list.add(annot_source_accession);
-		list.add(annot_source_database);
-
-		list.add(variant_origin);
-		list.add(variant_original_amino_acid);
-		list.add(variant_variation_amino_acid);
-		list.add(variant_original_genomic);
-		list.add(variant_variation_genomic);
-		list.add(variant_name_synonym_genomic);
-		list.add(variant_name_synonym_protein);
-		list.add(variant_name_synonym_isoform);
-		list.add(variant_name_synonym_error);
-
-		list.add(modified_entry_name);
-		list.add(evidence_source_accession);
-		list.add(reference_pubmed);
-
-		StringBuilder sb = new StringBuilder();
-		Iterator<String> it = list.iterator();
-		while (it.hasNext()) {
-			sb.append(it.next());
-			sb.append(separator);
-		}
-		return sb.toString();
-
-	}
-
+	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
@@ -438,5 +456,13 @@ public class RawStatement {
 	public void setBiological_object_annot_hash(String biological_object_annot_hash) {
 		this.biological_object_annot_hash = biological_object_annot_hash;
 	}
-	
+
+	public String getExp_context_property_intensity() {
+		return exp_context_property_intensity;
+	}
+
+	public void setExp_context_property_intensity(String exp_context_property_intensity) {
+		this.exp_context_property_intensity = exp_context_property_intensity;
+	}
+
 }
