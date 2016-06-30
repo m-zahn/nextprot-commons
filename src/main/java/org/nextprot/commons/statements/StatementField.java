@@ -4,13 +4,20 @@ public enum StatementField {
 
 	// According with https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
 
-	ENTRY_ACCESSION(true),
-	GENE_NAME,
-	ISOFORM_ACCESSION(true),
+	NEXTPROT_ACCESSION, //Used for raw statements
 	
+	ENTRY_ACCESSION(true), //Used for mapped statement
+	GENE_NAME,//TODO should be a list of gene names
+	
+	ISOFORM_ACCESSION(true),
+
+	BIOLOGICAL_SUBJECT_ANNOT_HASH(true),
+	BIOLOGICAL_SUBJECT_ANNOT_NAME,
+
 	ANNOTATION_CATEGORY(true),
 	ANNOT_DESCRIPTION(true),
 	ANNOT_NAME, 
+	ANNOT_HASH, 
 	
 	ANNOT_CV_TERM_TERMINOLOGY(true),
 	ANNOT_CV_TERM_ACCESSION(true),
@@ -27,8 +34,6 @@ public enum StatementField {
 	VARIANT_ORIGINAL_GENOMIC(true),
 	VARIANT_VARIATION_GENOMIC(true),
 	
-
-	BIOLOGICAL_SUBJECT_ANNOT_HASH(true),
 
 	BIOLOGICAL_OBJECT_TYPE(true),
 	BIOLOGICAL_OBJECT_ACCESSION(true),

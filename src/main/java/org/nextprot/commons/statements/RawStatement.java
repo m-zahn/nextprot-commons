@@ -8,11 +8,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class RawStatement {
 
-	private static final long serialVersionUID = -157703153930536610L;
-
 	private Map<String, String> keyValues = null;
 
-	// Keep it package protected, so it enforeces to use the builder
+	// Keep the constructor package protected, so it enforces the use of the Builder
 	RawStatement(Map<String, String> map) {
 		keyValues = new TreeMap<String, String>(map);
 	}
@@ -21,6 +19,9 @@ public class RawStatement {
 		return keyValues.get(field.name());
 	}
 
+	String putValue(StatementField field, String value) {
+		return keyValues.put(field.name(), value);
+	}
 	/**
 	 * Not sure it should be part of the statement
 	 * 
@@ -48,7 +49,7 @@ public class RawStatement {
 	 */
 	@Deprecated
 	public String getBiological_subject_annot_hash() {
-		return this.getValue(StatementField.BIOLOGICAL_OBJECT_ANNOT_HASH);
+		return this.getValue(StatementField.BIOLOGICAL_SUBJECT_ANNOT_HASH);
 	}
 
 }
