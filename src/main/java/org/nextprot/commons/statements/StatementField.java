@@ -18,7 +18,9 @@ public enum StatementField {
 	ANNOT_DESCRIPTION(true),
 	ANNOT_NAME, 
 	ANNOT_HASH, 
-	
+
+	STATEMENT_QUALITY, 
+
 	ANNOT_CV_TERM_TERMINOLOGY(true),
 	ANNOT_CV_TERM_ACCESSION(true),
 	ANNOT_CV_TERM_NAME,
@@ -50,7 +52,7 @@ public enum StatementField {
 	//Experimental context fields
 	EXP_CONTEXT_ECO_DETECT_METHOD,
 	EXP_CONTEXT_PROPERTY_INTENSITY,
-
+	EXP_CTX_PRPTY_PROTEIN_ORIGIN //CHECK THIS	
 	;
 	
 
