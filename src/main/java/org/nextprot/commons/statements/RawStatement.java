@@ -6,21 +6,21 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class RawStatement extends TreeMap<String, String>{
+public class RawStatement {
 
-	private static final long serialVersionUID = 1128974177596821182L;
+	private Map<String, String> keyValues = null;
 
 	// Keep the constructor package protected, so it enforces the use of the Builder
 	RawStatement(Map<String, String> map) {
-		super(map);
+		keyValues = new TreeMap<String, String>(map);
 	}
 
 	public String getValue(StatementField field) {
-		return get(field.name());
+		return keyValues.get(field.name());
 	}
 
 	String putValue(StatementField field, String value) {
-		return put(field.name(), value);
+		return keyValues.put(field.name(), value);
 	}
 	/**
 	 * Not sure it should be part of the statement
@@ -41,6 +41,12 @@ public class RawStatement extends TreeMap<String, String>{
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
+	
+
+	Map<String, String> getKeyValuesMap() {
+		return keyValues;
+	}
+	
 
 
 }
