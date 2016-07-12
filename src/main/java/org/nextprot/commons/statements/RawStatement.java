@@ -6,21 +6,21 @@ import java.util.TreeMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class RawStatement {
+public class RawStatement extends TreeMap<String, String>{
 
-	private Map<String, String> keyValues = null;
+	private static final long serialVersionUID = 1128974177596821182L;
 
 	// Keep the constructor package protected, so it enforces the use of the Builder
 	RawStatement(Map<String, String> map) {
-		keyValues = new TreeMap<String, String>(map);
+		super(map);
 	}
 
 	public String getValue(StatementField field) {
-		return keyValues.get(field.name());
+		return get(field.name());
 	}
 
 	String putValue(StatementField field, String value) {
-		return keyValues.put(field.name(), value);
+		return put(field.name(), value);
 	}
 	/**
 	 * Not sure it should be part of the statement
@@ -42,14 +42,5 @@ public class RawStatement {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 
-	/**
-	 * Used for groupBy function. This should be delegated to an external class
-	 * 
-	 * @return
-	 */
-	@Deprecated
-	public String getBiological_subject_annot_hash() {
-		return this.getValue(StatementField.BIOLOGICAL_SUBJECT_ANNOT_HASH);
-	}
 
 }
