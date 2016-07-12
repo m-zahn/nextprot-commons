@@ -42,7 +42,7 @@ public class RawStatement {
 	}
 	
 
-	Map<String, String> getKeyValuesMap() {
+	public Map<String, String> getKeyValuesMap() {
 		return keyValues;
 	}
 	
