@@ -27,7 +27,6 @@ public class RawStatement {
 	 * 
 	 * @return
 	 */
-	@Deprecated
 	public String getAnnot_hash() {
 		return StatementUtil.getAnnotationHash(this);
 	}
