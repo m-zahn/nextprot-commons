@@ -52,7 +52,11 @@ public enum StatementField {
 	//Experimental context fields
 	EXP_CONTEXT_ECO_DETECT_METHOD,
 	EXP_CONTEXT_PROPERTY_INTENSITY,
-	EXP_CTX_PRPTY_PROTEIN_ORIGIN //CHECK THIS	
+	EXP_CTX_PRPTY_PROTEIN_ORIGIN, //CHECK THIS	
+
+	
+
+	DEBUG_NOTE //Used for errors
 	;
 	
 
