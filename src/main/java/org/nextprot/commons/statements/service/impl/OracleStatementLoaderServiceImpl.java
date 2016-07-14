@@ -1,6 +1,7 @@
 package org.nextprot.commons.statements.service.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import org.nextprot.commons.utils.StringUtils;
 public class OracleStatementLoaderServiceImpl implements StatementLoaderService {
 
 	private String TABLE = "MAPPED_STATEMENTS_NEXT";
-
+	
 	@Override
 	public void load(List<RawStatement> statements) {
 
@@ -22,33 +23,36 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 		try {
 
 			conn = OracleConnectionPool.getConnection();
-			Statement statement = conn.createStatement();
-
 			String columnNames = StringUtils.mkString(StatementField.values(), "", ",", "");
-			
-			for(RawStatement s : statements){
-				
-				List<String> values = new ArrayList<>();
-				for(StatementField v : StatementField.values()) {
-					String value = s.getValue(v);
-					values.add((value != null) ? value.replace("'", "''") : null);
+			List<String> bindVariablesList = new ArrayList<>();
+			for (int i=0 ; i<StatementField.values().length; i++) {
+				bindVariablesList.add("?");
+			}
+			String bindVariables = StringUtils.mkString(bindVariablesList, "",",", "");
+
+			PreparedStatement pstmt = conn.prepareStatement(
+					"INSERT INTO " + TABLE + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
+			);
+
+			for (RawStatement s : statements) {
+				for (int i = 0; i < StatementField.values().length; i++) {
+					String value = s.getValue(StatementField.values()[i]);
+					if (value != null) {
+						pstmt.setString(i + 1, value.replace("'", "''"));
+					} else {
+						pstmt.setNull(i + 1, java.sql.Types.NVARCHAR);
+					}
 				}
-				String fieldValues = StringUtils.mkString(values, "'", ",", "'");
-				
-				
-				String sqlStatement = "INSERT INTO " + TABLE + " (" + columnNames + ") VALUES ( " + fieldValues + ")";
-				statement.addBatch(sqlStatement);
-				
+				pstmt.addBatch();
 			}
 
-			statement.executeBatch();
-			statement.close();
+			pstmt.executeBatch();
+			pstmt.close();
 			conn.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 
 	}
 
@@ -64,7 +68,6 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 			statement.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

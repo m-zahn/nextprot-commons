@@ -3,6 +3,7 @@ package org.nextprot.commons.statements.service.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import oracle.jdbc.driver.OracleConnection;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 
 public class OracleConnectionPool {

@@ -79,14 +79,17 @@ public class StatementBuilder {
 
 
 	public StatementBuilder addDebugNote(String note) {
-		if(!this.keyValues.containsKey(StatementField.DEBUG_NOTE.name())){
-			addField(DEBUG_NOTE, "");
+		if(note != null && note.length() > 0){
+			
+			if(!this.keyValues.containsKey(StatementField.DEBUG_NOTE.name())){
+				addField(DEBUG_NOTE, "");
+			}
+			
+			String debugNote = this.keyValues.get(StatementField.DEBUG_NOTE.name());
+			debugNote += note + "\n";
+			
+			addField(DEBUG_NOTE, debugNote);
 		}
-		
-		String debugNote = this.keyValues.get(StatementField.DEBUG_NOTE.name());
-		debugNote += note + "\n";
-		
-		addField(DEBUG_NOTE, debugNote);
 		return this;
 	}
 	
