@@ -24,6 +24,10 @@ public class RawStatementTest {
 		set1.add(StatementBuilder.createNew().addCompulsaryFields("AAA", "BBB", "CCC").build());
 		
 		assertEquals(set1.size(), 1);
+		
+		set1.add(StatementBuilder.createNew().addCompulsaryFields("DDD", "BBB", "CCC").build());
+		assertEquals(set1.size(), 2);
+
 	}
 	
 	
@@ -38,7 +42,7 @@ public class RawStatementTest {
 				.addSourceInfo("XPTO", "Caviar").build();
 
 		assertNotEquals(rs1, rs2); 
-		assertEquals(rs1.getAnnot_hash(), rs2.getAnnot_hash());
+		assertEquals(rs1.getIsoformAnnotationId(), rs2.getIsoformAnnotationId());
 	}
 
 

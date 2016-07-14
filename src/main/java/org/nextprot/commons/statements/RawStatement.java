@@ -3,49 +3,33 @@ package org.nextprot.commons.statements;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-public class RawStatement {
-
-	private Map<String, String> keyValues = null;
+public class RawStatement extends TreeMap<String, String>{
+	
+	private static final long serialVersionUID = -4723168061980820149L;
+	
+	public RawStatement() {
+		super();
+	}
 
 	// Keep the constructor package protected, so it enforces the use of the Builder
 	RawStatement(Map<String, String> map) {
-		keyValues = new TreeMap<String, String>(map);
+		super(new TreeMap<String, String>(map));
 	}
 
 	public String getValue(StatementField field) {
-		return keyValues.get(field.name());
+		return get(field.name());
 	}
 
 	String putValue(StatementField field, String value) {
-		return keyValues.put(field.name(), value);
-	}
-	/**
-	 * Not sure it should be part of the statement
-	 * 
-	 * @return
-	 */
-	public String getAnnot_hash() {
-		return StatementUtil.getAnnotationHash(this);
+		return put(field.name(), value);
 	}
 
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+	public String getIsoformAnnotationId() {
+		return StatementUtil.getIsoAnnotationId(this);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+	public String getEntryAnnotationId() {
+		return StatementUtil.getEntryAnnotationId(this);
 	}
-	
-
-	public Map<String, String> getKeyValuesMap() {
-		return keyValues;
-	}
-	
-
 
 }

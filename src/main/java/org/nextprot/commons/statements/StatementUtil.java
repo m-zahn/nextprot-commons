@@ -8,22 +8,38 @@ import org.nextprot.commons.algo.MD5Algo;
 
 public class StatementUtil {
 
-	public static String getAnnotationHash(RawStatement statement) {
+	public static String getEntryAnnotationId(RawStatement statement) {
+		return getAnnotationId(statement, AnnotationType.ENTRY);
+	}
 
-		//Filter fields which are used to compute unicity
+	public static String getIsoAnnotationId(RawStatement statement) {
+		return getAnnotationId(statement, AnnotationType.ISOFORM);
+	}
+
+	private static String getAnnotationId(RawStatement statement, AnnotationType type) {
+
+		// Filter fields which are used to compute unicity
 		Set<StatementField> unicityFields = new TreeSet<StatementField>();
 		StatementField[] fields = StatementField.values();
 		for (StatementField field : fields) {
-			// According with https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
-			if (field.isUnicity()) {
-				unicityFields.add(field);
+			// According with
+			// https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
+
+			if (type.equals(AnnotationType.ISOFORM)) {
+				if (field.isIsoUnicity()) {
+					unicityFields.add(field);
+				}
+			} else if (type.equals(AnnotationType.ENTRY)) {
+				if (field.isEntryUnicity()) {
+					unicityFields.add(field);
+				}
 			}
 		}
 
 		TreeSet<String> contentItems = new TreeSet<String>();
 		for (StatementField unicityField : unicityFields) {
 			String value = statement.getValue(unicityField);
-			if(value != null){
+			if (value != null) {
 				contentItems.add(value);
 			}
 		}
