@@ -1,5 +1,10 @@
 package org.nextprot.commons.statements.service.impl;
 
+import org.nextprot.commons.statements.RawStatement;
+import org.nextprot.commons.statements.StatementField;
+import org.nextprot.commons.statements.service.StatementLoaderService;
+import org.nextprot.commons.utils.StringUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -7,15 +12,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.nextprot.commons.statements.RawStatement;
-import org.nextprot.commons.statements.StatementField;
-import org.nextprot.commons.statements.service.StatementLoaderService;
-import org.nextprot.commons.utils.StringUtils;
-
 public class OracleStatementLoaderServiceImpl implements StatementLoaderService {
 
-	private String TABLE = "MAPPED_STATEMENTS_NEXT";
-	
+	private static final String TABLE = "MAPPED_STATEMENTS_NEXT";
+
+	private final String table;
+
+	public OracleStatementLoaderServiceImpl() {
+		this(TABLE);
+	}
+
+	public OracleStatementLoaderServiceImpl(String table) {
+		this.table = table;
+	}
+
 	@Override
 	public void load(List<RawStatement> statements) {
 
@@ -31,7 +41,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 			String bindVariables = StringUtils.mkString(bindVariablesList, "",",", "");
 
 			PreparedStatement pstmt = conn.prepareStatement(
-					"INSERT INTO " + TABLE + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
+					"INSERT INTO " + table + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
 			);
 
 			for (RawStatement s : statements) {
@@ -63,7 +73,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 
 			Connection conn = OracleConnectionPool.getConnection();
 			Statement statement = conn.createStatement();
-			statement.executeQuery("DELETE FROM " + TABLE);
+			statement.executeQuery("DELETE FROM " + table);
 			statement.close();
 			statement.close();
 
