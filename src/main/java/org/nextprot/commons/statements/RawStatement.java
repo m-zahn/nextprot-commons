@@ -7,12 +7,6 @@ public class RawStatement extends TreeMap<String, String>{
 	
 	private static final long serialVersionUID = -4723168061980820149L;
 	
-	private String statementId;
-	
-	public void setStatementId(String statementId) {
-		this.statementId = statementId;
-	}
-
 	//Needed for serialization in Play?
 	public RawStatement() {
 		super();
@@ -41,7 +35,7 @@ public class RawStatement extends TreeMap<String, String>{
 	}
 	
 	public String getStatementId() {
-		return this.statementId;
+		return this.getValue(StatementField.STATEMENT_ID);
 	}
 	
 	public String getObjectStatementId() {

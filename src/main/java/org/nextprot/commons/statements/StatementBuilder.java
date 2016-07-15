@@ -1,8 +1,25 @@
 package org.nextprot.commons.statements;
 
-import java.util.*;
+import static org.nextprot.commons.statements.StatementField.ANNOTATION_CATEGORY;
+import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_NAME;
+import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_TERMINOLOGY;
+import static org.nextprot.commons.statements.StatementField.ANNOT_LOC_BEGIN_CANONICAL_REF;
+import static org.nextprot.commons.statements.StatementField.ANNOT_LOC_END_CANONICAL_REF;
+import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_DATABASE;
+import static org.nextprot.commons.statements.StatementField.DEBUG_NOTE;
+import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.ISOFORM_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.OBJECT_STATEMENT_IDS;
+import static org.nextprot.commons.statements.StatementField.SUBJECT_STATEMENT_IDS;
+import static org.nextprot.commons.statements.StatementField.VARIANT_ORIGINAL_AMINO_ACID;
+import static org.nextprot.commons.statements.StatementField.VARIANT_VARIATION_AMINO_ACID;
 
-import static org.nextprot.commons.statements.StatementField.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class StatementBuilder {
 
@@ -23,62 +40,58 @@ public class StatementBuilder {
 		StringBuilder sbStatementIds = new StringBuilder();
 
 		Iterator<RawStatement> statementsIt = statements.iterator();
-		
-		while(statementsIt.hasNext()){
+
+		while (statementsIt.hasNext()) {
 			RawStatement s = statementsIt.next();
 			sbStatementIds.append(s.getStatementId());
-			if(statementsIt.hasNext()){
+			if (statementsIt.hasNext()) {
 				sbStatementIds.append(",");
 			}
 		}
-		
+
 		addField(SUBJECT_STATEMENT_IDS, sbStatementIds.toString());
 
 		return this;
 	}
 
-	
 	public StatementBuilder addAnnotationObject(RawStatement statement) {
 		addField(OBJECT_STATEMENT_IDS, statement.getStatementId());
 		return this;
 	}
 
-
 	public StatementBuilder addDebugNote(String note) {
-		if(note != null && note.length() > 0){
-			
-			if(!this.keyValues.containsKey(StatementField.DEBUG_NOTE.name())){
+		if (note != null && note.length() > 0) {
+
+			if (!this.keyValues.containsKey(StatementField.DEBUG_NOTE.name())) {
 				addField(DEBUG_NOTE, "");
 			}
-			
+
 			String debugNote = this.keyValues.get(StatementField.DEBUG_NOTE.name());
 			debugNote += note + "\n";
-			
+
 			addField(DEBUG_NOTE, debugNote);
 		}
 		return this;
 	}
-	
 
 	public RawStatement build() {
 		RawStatement rs = new RawStatement(keyValues);
-		rs.setStatementId(StatementUtil.computeAndGetAnnotationId(rs, AnnotationType.STATEMENT));
+		rs.putValue(StatementField.STATEMENT_ID, StatementUtil.computeAndGetAnnotationId(rs, AnnotationType.STATEMENT));
 		return rs;
 	}
-	
+
 	public StatementBuilder addMap(Map<String, String> map) {
 		keyValues.putAll(map);
 		return this;
 	}
-	
-	
+
 	public StatementBuilder addCompulsoryFields(String entryAccession, String isoformAccession, String annotationCategory) {
 		addField(ENTRY_ACCESSION, entryAccession);
 		addField(ISOFORM_ACCESSION, isoformAccession);
 		addField(ANNOTATION_CATEGORY, annotationCategory);
 		return this;
 	}
-	
+
 	public StatementBuilder addCvTerm(String cvTermAccession, String cvTermName, String cvTerminology) {
 		addField(ANNOT_CV_TERM_ACCESSION, cvTermAccession);
 		addField(ANNOT_CV_TERM_NAME, cvTermName);
@@ -94,16 +107,16 @@ public class StatementBuilder {
 
 	public StatementBuilder addVariantInfo(String firstPosition, String lastPosition, String variationOrigin, String variationVariation) {
 
-		addField(ANNOTATION_CATEGORY, "variant");//What about mutagenesis
-		
-	    addField(ANNOT_LOC_BEGIN_CANONICAL_REF, firstPosition);
-	    addField(ANNOT_LOC_END_CANONICAL_REF, lastPosition);
+		addField(ANNOTATION_CATEGORY, "variant");// What about mutagenesis
 
-	    addField(VARIANT_ORIGINAL_AMINO_ACID, variationOrigin);
-	    addField(VARIANT_VARIATION_AMINO_ACID, variationVariation);
-	    
-	    return this;
-	    
+		addField(ANNOT_LOC_BEGIN_CANONICAL_REF, firstPosition);
+		addField(ANNOT_LOC_END_CANONICAL_REF, lastPosition);
+
+		addField(VARIANT_ORIGINAL_AMINO_ACID, variationOrigin);
+		addField(VARIANT_VARIATION_AMINO_ACID, variationVariation);
+
+		return this;
+
 	}
 
 	public StatementBuilder addLocationFields(String locationBegin, String locationEnd) {
