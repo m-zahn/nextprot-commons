@@ -10,7 +10,6 @@ public class StatementBuilder {
 
 	public static StatementBuilder createNew() {
 		StatementBuilder sb = new StatementBuilder();
-		sb.addField(StatementField.STATEMENT_ID, UUID.randomUUID().toString());
 		return sb;
 	}
 
@@ -62,7 +61,9 @@ public class StatementBuilder {
 	
 
 	public RawStatement build() {
-		return new RawStatement(keyValues);
+		RawStatement rs = new RawStatement(keyValues);
+		rs.setStatementId(StatementUtil.computeAndGetAnnotationId(rs, AnnotationType.STATEMENT));
+		return rs;
 	}
 	
 	public StatementBuilder addMap(Map<String, String> map) {

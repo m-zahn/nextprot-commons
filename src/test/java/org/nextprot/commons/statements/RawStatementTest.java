@@ -1,12 +1,13 @@
 package org.nextprot.commons.statements;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import org.junit.Test;
 
 public class RawStatementTest {
 	
@@ -36,12 +37,19 @@ public class RawStatementTest {
 	public void testAnnotHashUnicity() {
 
 		RawStatement rs1 = StatementBuilder.createNew()
+				.addField(StatementField.NEXTPROT_ACCESSION, "NX_P25054")
+				.addField(StatementField.GENE_NAME, "apc")
+				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
 				.addCompulsoryFields("AAA", "BBB", "CCC")
 				.addSourceInfo("CAVA-VP90999", "BED").build();
 		RawStatement rs2 = StatementBuilder.createNew()
+				.addField(StatementField.NEXTPROT_ACCESSION, "NX_P25054")
+				.addField(StatementField.GENE_NAME, "apc")
+				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
 				.addCompulsoryFields("AAA", "BBB", "CCC")
 				.addSourceInfo("XPTO", "Caviar").build();
 
+		StatementUtil.computeAndSetAnnotationIdsForRawStatements(Arrays.asList(rs1, rs2));
 		assertNotEquals(rs1, rs2); 
 		assertEquals(rs1.getValue(StatementField.ANNOT_ISO_ID), rs2.getValue(StatementField.ANNOT_ISO_ID));
 	}
