@@ -1,31 +1,12 @@
 package org.nextprot.commons.statements;
 
-import static org.nextprot.commons.statements.StatementField.ANNOTATION_CATEGORY;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_NAME;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_TERMINOLOGY;
-import static org.nextprot.commons.statements.StatementField.ANNOT_LOC_BEGIN_CANONICAL_REF;
-import static org.nextprot.commons.statements.StatementField.ANNOT_LOC_END_CANONICAL_REF;
-import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_DATABASE;
-import static org.nextprot.commons.statements.StatementField.DEBUG_NOTE;
-import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ISOFORM_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.OBJECT_ANNOT_ENTRY_IDS;
-import static org.nextprot.commons.statements.StatementField.OBJECT_ANNOT_ISO_IDS;
-import static org.nextprot.commons.statements.StatementField.SUBJECT_ANNOT_ISO_IDS;
-import static org.nextprot.commons.statements.StatementField.SUBJECT_ANNOT_ISO_UNAMES;
-import static org.nextprot.commons.statements.StatementField.VARIANT_ORIGINAL_AMINO_ACID;
-import static org.nextprot.commons.statements.StatementField.VARIANT_VARIATION_AMINO_ACID;
+import java.util.*;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import static org.nextprot.commons.statements.StatementField.*;
 
 public class StatementBuilder {
 
-	private Map<String, String> keyValues = new HashMap<String, String>();
+	private Map<String, String> keyValues = new TreeMap<>();
 
 	public static StatementBuilder createNew() {
 		return new StatementBuilder();
