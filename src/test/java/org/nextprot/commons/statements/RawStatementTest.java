@@ -43,7 +43,7 @@ public class RawStatementTest {
 				.addSourceInfo("XPTO", "Caviar").build();
 
 		assertNotEquals(rs1, rs2); 
-		assertEquals(rs1.getIsoformAnnotationId(), rs2.getIsoformAnnotationId());
+		assertEquals(rs1.getValue(StatementField.ANNOT_ISO_ID), rs2.getValue(StatementField.ANNOT_ISO_ID));
 	}
 
 	@Test

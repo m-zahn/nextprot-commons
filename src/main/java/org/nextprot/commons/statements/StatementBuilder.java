@@ -9,7 +9,9 @@ public class StatementBuilder {
 	private Map<String, String> keyValues = new TreeMap<>();
 
 	public static StatementBuilder createNew() {
-		return new StatementBuilder();
+		StatementBuilder sb = new StatementBuilder();
+		sb.addField(StatementField.STATEMENT_ID, UUID.randomUUID().toString());
+		return sb;
 	}
 
 	public StatementBuilder addField(StatementField statementField, String statementValue) {
@@ -19,42 +21,26 @@ public class StatementBuilder {
 
 	public StatementBuilder addAnnotationSubject(Set<RawStatement> statements) {
 
-		StringBuilder sbIsoIds = new StringBuilder();
-		StringBuilder sbIsoUnames = new StringBuilder();
+		StringBuilder sbStatementIds = new StringBuilder();
 
-		
 		Iterator<RawStatement> statementsIt = statements.iterator();
 		
 		while(statementsIt.hasNext()){
 			RawStatement s = statementsIt.next();
-			sbIsoIds.append(s.getIsoformAnnotationId());
-			sbIsoUnames.append(s.getValue(StatementField.ANNOT_ISO_UNAME));
+			sbStatementIds.append(s.getStatementId());
 			if(statementsIt.hasNext()){
-				sbIsoIds.append(",");
-				sbIsoUnames.append(",");
+				sbStatementIds.append(",");
 			}
 		}
 		
-		addField(SUBJECT_ANNOT_ISO_IDS, sbIsoIds.toString());
-		addField(SUBJECT_ANNOT_ISO_UNAMES, sbIsoUnames.toString());
-
-		/*addField(SUBJECT_ANNOT_ENTRY_IDS, statement.getEntryAnnotationId());
-	    addField(SUBJECT_ANNOT_ENTRY_UNAMES, null);
-		 */
+		addField(SUBJECT_STATEMENT_IDS, sbStatementIds.toString());
 
 		return this;
 	}
 
 	
 	public StatementBuilder addAnnotationObject(RawStatement statement) {
-
-		addField(OBJECT_ANNOT_ISO_IDS, statement.getIsoformAnnotationId());
-	    addField(OBJECT_ANNOT_ENTRY_IDS, statement.getEntryAnnotationId());
-
-		addField(OBJECT_ANNOT_ENTRY_IDS, null);
-	    addField(OBJECT_ANNOT_ENTRY_IDS, null);
-
-
+		addField(OBJECT_STATEMENT_IDS, statement.getStatementId());
 		return this;
 	}
 
@@ -76,12 +62,7 @@ public class StatementBuilder {
 	
 
 	public RawStatement build() {
-		RawStatement rs = new RawStatement(keyValues);
-
-		rs.putValue(StatementField.ANNOT_ISO_ID, StatementUtil.getIsoAnnotationId(rs));
-		rs.putValue(StatementField.ANNOT_ENTRY_ID, StatementUtil.getEntryAnnotationId(rs));
-
-		return rs;
+		return new RawStatement(keyValues);
 	}
 	
 	public StatementBuilder addMap(Map<String, String> map) {

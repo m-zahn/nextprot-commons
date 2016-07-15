@@ -2,8 +2,9 @@ package org.nextprot.commons.statements;
 
 public enum StatementField {
 
-	// According with https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
+	STATEMENT_ID, //UUID
 
+	// According with https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
 	NEXTPROT_ACCESSION, //Used for raw statements
 	
 	ENTRY_ACCESSION(true, true), //Used for mapped statement
@@ -16,6 +17,7 @@ public enum StatementField {
 
 	
 	// SUBJECTS ///////////////////////////////////////////////////////
+	SUBJECT_STATEMENT_IDS(true, false),
 	
 	SUBJECT_ANNOT_ISO_IDS(true, false),
 	SUBJECT_ANNOT_ENTRY_IDS(false, true),
@@ -56,6 +58,7 @@ public enum StatementField {
 	BIOLOGICAL_OBJECT_DATABASE(true, true),
 
 	// OBJECT ANNOTATION ///////////////////////////////////////////////////////////
+	OBJECT_STATEMENT_IDS(true, false),
 	OBJECT_ANNOT_ISO_IDS(true, false),
 	OBJECT_ANNOT_ENTRY_IDS(false, true),
 
