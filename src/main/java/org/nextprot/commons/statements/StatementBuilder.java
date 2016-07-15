@@ -90,7 +90,7 @@ public class StatementBuilder {
 	}
 	
 	
-	public StatementBuilder addCompulsaryFields(String entryAccession, String isoformAccession, String annotationCategory) {
+	public StatementBuilder addCompulsoryFields(String entryAccession, String isoformAccession, String annotationCategory) {
 		addField(ENTRY_ACCESSION, entryAccession);
 		addField(ISOFORM_ACCESSION, isoformAccession);
 		addField(ANNOTATION_CATEGORY, annotationCategory);
