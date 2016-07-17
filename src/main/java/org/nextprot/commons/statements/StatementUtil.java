@@ -1,6 +1,7 @@
 package org.nextprot.commons.statements;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -56,7 +57,7 @@ public class StatementUtil {
 
 	}
 	
-	public static void computeAndSetAnnotationIdsForRawStatements(List<RawStatement> statements) {
+	public static void computeAndSetAnnotationIdsForRawStatements(Collection<RawStatement> statements) {
 		
 		
 		HashMap<String, RawStatement> normalStatementsMap = new HashMap<String, RawStatement>();

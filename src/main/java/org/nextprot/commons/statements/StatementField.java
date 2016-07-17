@@ -3,6 +3,7 @@ package org.nextprot.commons.statements;
 public enum StatementField {
 
 	STATEMENT_ID, 
+	RAW_STATEMENT_ID, 
 	
 	// According with https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
 	NEXTPROT_ACCESSION, //Used for raw statements

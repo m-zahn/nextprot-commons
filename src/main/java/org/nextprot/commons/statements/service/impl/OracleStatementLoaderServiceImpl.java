@@ -1,17 +1,18 @@
 package org.nextprot.commons.statements.service.impl;
 
-import org.nextprot.commons.statements.RawStatement;
-import org.nextprot.commons.statements.StatementField;
-import org.nextprot.commons.statements.StatementUtil;
-import org.nextprot.commons.statements.service.StatementLoaderService;
-import org.nextprot.commons.utils.StringUtils;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import org.nextprot.commons.statements.RawStatement;
+import org.nextprot.commons.statements.StatementField;
+import org.nextprot.commons.statements.StatementUtil;
+import org.nextprot.commons.statements.service.StatementLoaderService;
+import org.nextprot.commons.utils.StringUtils;
 
 public class OracleStatementLoaderServiceImpl implements StatementLoaderService {
 
@@ -28,7 +29,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 	}
 
 	@Override
-	public void load(List<RawStatement> statements) {
+	public void load(Set<RawStatement> statements) {
 		
 		
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements);
