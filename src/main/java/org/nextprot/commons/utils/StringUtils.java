@@ -6,6 +6,10 @@ import java.util.List;
 
 public class StringUtils {
 
+	public static String mkString(Iterable<?> values, String sep) {
+		return mkString(values, "", sep, "");
+	}
+
 	public static String mkString(Iterable<?> values, String start, String sep,
 			String end) {
 		// if the array is null or empty return an empty string

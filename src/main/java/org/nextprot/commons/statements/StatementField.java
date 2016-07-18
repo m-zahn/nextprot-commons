@@ -30,6 +30,8 @@ public enum StatementField {
 	ANNOTATION_CATEGORY(true, true),
 	ANNOT_DESCRIPTION(true, true),
 
+	ISOFORM_CANONICAL,
+
 	ANNOT_ISO_ID, 
 	ANNOT_ISO_UNAME, 
 
@@ -44,6 +46,7 @@ public enum StatementField {
 	
 	ANNOT_LOC_BEGIN_CANONICAL_REF (true, false),
 	ANNOT_LOC_END_CANONICAL_REF(true, false),
+
 	ANNOT_LOC_BEGIN_GENOMIC_REF,
 	ANNOT_LOC_END_GENOMIC_REF,
 

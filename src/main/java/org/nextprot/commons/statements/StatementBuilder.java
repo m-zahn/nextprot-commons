@@ -16,10 +16,14 @@ import static org.nextprot.commons.statements.StatementField.SUBJECT_STATEMENT_I
 import static org.nextprot.commons.statements.StatementField.VARIANT_ORIGINAL_AMINO_ACID;
 import static org.nextprot.commons.statements.StatementField.VARIANT_VARIATION_AMINO_ACID;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
+
+import org.nextprot.commons.utils.StringUtils;
 
 public class StatementBuilder {
 
@@ -35,21 +39,20 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public StatementBuilder addAnnotationSubject(Set<RawStatement> statements) {
+	public StatementBuilder addAnnotationSubject(Collection<RawStatement> statements) {
 
-		StringBuilder sbStatementIds = new StringBuilder();
+		Set<String> sortedStatementIds = new TreeSet<String>();
 
 		Iterator<RawStatement> statementsIt = statements.iterator();
 
 		while (statementsIt.hasNext()) {
 			RawStatement s = statementsIt.next();
-			sbStatementIds.append(s.getStatementId());
-			if (statementsIt.hasNext()) {
-				sbStatementIds.append(",");
-			}
+			sortedStatementIds.add(s.getStatementId());
 		}
+		
+		String subjectStatemendIds = StringUtils.mkString(sortedStatementIds, ",");
 
-		addField(SUBJECT_STATEMENT_IDS, sbStatementIds.toString());
+		addField(SUBJECT_STATEMENT_IDS, subjectStatemendIds);
 
 		return this;
 	}
