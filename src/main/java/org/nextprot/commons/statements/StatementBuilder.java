@@ -39,7 +39,7 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public StatementBuilder addAnnotationSubject(Collection<RawStatement> statements) {
+	public StatementBuilder addSubjects(Collection<RawStatement> statements) {
 
 		Set<String> sortedStatementIds = new TreeSet<String>();
 
@@ -57,7 +57,7 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public StatementBuilder addAnnotationObject(RawStatement statement) {
+	public StatementBuilder addObject(RawStatement statement) {
 		addField(OBJECT_STATEMENT_IDS, statement.getStatementId());
 		return this;
 	}
