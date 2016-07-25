@@ -10,11 +10,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.nextprot.commons.algo.MD5Algo;
+import org.nextprot.commons.statements.constants.AnnotationType;
 import org.nextprot.commons.utils.StringUtils;
 
 public class StatementUtil {
 	
-	public static String computeAndGetAnnotationId(RawStatement statement, AnnotationType type) {
+	public static String computeAndGetAnnotationId(Statement statement, AnnotationType type) {
 
 		// Filter fields which are used to compute unicity
 		Set<StatementField> unicityFields = new TreeSet<StatementField>();
@@ -57,13 +58,13 @@ public class StatementUtil {
 
 	}
 	
-	public static void computeAndSetAnnotationIdsForRawStatements(Collection<RawStatement> statements, AnnotationType annotationType){
+	public static void computeAndSetAnnotationIdsForRawStatements(Collection<Statement> statements, AnnotationType annotationType){
 		
-		HashMap<String, RawStatement> normalStatementsMap = new HashMap<String, RawStatement>();
-		List<RawStatement> statementsOnModifiedSubjects = new ArrayList<RawStatement>();
+		HashMap<String, Statement> normalStatementsMap = new HashMap<String, Statement>();
+		List<Statement> statementsOnModifiedSubjects = new ArrayList<Statement>();
 
 		//Takes all normal statements and put them in a map and all the other put them in a list 
-		for(RawStatement s : statements){
+		for(Statement s : statements){
 			if(!s.hasModifiedSubject()){
 				s.computeAndSetAnnotationIds(annotationType);
 				normalStatementsMap.put(s.getStatementId(), s);
@@ -72,7 +73,7 @@ public class StatementUtil {
 			}
 		}
 		
-		for(RawStatement complexStatement : statementsOnModifiedSubjects){
+		for(Statement complexStatement : statementsOnModifiedSubjects){
 			
 			String subjectIds = complexStatement.getSubjectStatementIds();
 			setValues(complexStatement, StatementField.SUBJECT_ANNOTATION_IDS, subjectIds, StatementField.ANNOTATION_ID, normalStatementsMap);
@@ -88,11 +89,11 @@ public class StatementUtil {
 	
 	
 	public static void setValues(
-			RawStatement complexStatement, 
+			Statement complexStatement, 
 			StatementField fieldToSetInComplexStatement, 
 			String referenceIds, 
 			StatementField fieldTotakeFromSubject,
-			Map<String, RawStatement> statementsDictionary) {
+			Map<String, Statement> statementsDictionary) {
 		
 		Set<String> subjectIsoIds = new TreeSet<>();
 		
@@ -100,7 +101,7 @@ public class StatementUtil {
 
 		//Can be 1 or multiple subjects but most of the time it's just one
 		for(String referenceId : referenceIdsArray){
-			RawStatement referedStatement = statementsDictionary.get(referenceId); 
+			Statement referedStatement = statementsDictionary.get(referenceId); 
 			
 			if(referedStatement == null){
 				throw new RuntimeException("Invalid statements. Can't find referenced statement " +  referenceId + ", referenced by statement " + complexStatement.getStatementId());

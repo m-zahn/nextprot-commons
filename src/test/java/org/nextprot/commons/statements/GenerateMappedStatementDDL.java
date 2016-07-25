@@ -1,13 +1,20 @@
 package org.nextprot.commons.statements;
 
 import org.junit.Test;
+import org.nextprot.commons.statements.constants.StatementTableNames;
 
 public class GenerateMappedStatementDDL {
 
-	String tableName = "MAPPED_STATEMENTS_NEXT";
-
 	@Test
 	public void generateDDL() {
+		generateOneTable(StatementTableNames.ENTRY_TABLE);
+		generateOneTable(StatementTableNames.ISO_TABLE);
+		generateOneTable(StatementTableNames.RAW_TABLE);
+
+	}
+	
+	private void generateOneTable(String tableName){
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append("DROP TABLE " + tableName + ";\n");
 		sb.append("CREATE TABLE " + tableName + " (\n");
@@ -20,12 +27,16 @@ public class GenerateMappedStatementDDL {
 		}
 		sb.append(");\n");
 
-		sb.append("CREATE INDEX MS_" + StatementField.ENTRY_ACCESSION.name() + "_IDX ON " + tableName + " ( " + StatementField.ENTRY_ACCESSION.name() + " );\n");
-		sb.append("CREATE INDEX MS_" + StatementField.ANNOTATION_ID.name() + "_IDX ON " + tableName + " ( " + StatementField.ANNOTATION_ID.name() + " );\n");
+		sb.append("CREATE INDEX " + tableName.substring(0, 10) + "_ENTRY_AC_IDX ON " + tableName + " ( " + StatementField.ENTRY_ACCESSION.name() + " );\n");
+		sb.append("CREATE INDEX " + tableName.substring(0, 10) + "_ANNOT_ID_IDX ON " + tableName + " ( " + StatementField.ANNOTATION_ID.name() + " );\n");
 
-		sb.append("GRANT SELECT ON MAPPED_STATEMENTS_NEXT TO nxbed_read;\n");
+		sb.append("GRANT SELECT ON " + tableName + " TO nxbed_read;\n");
 
 		System.out.println(sb.toString());
+		System.out.println();
+		System.out.println();
+
+		
 	}
 
 }

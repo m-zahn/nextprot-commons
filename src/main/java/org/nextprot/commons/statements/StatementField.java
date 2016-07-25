@@ -68,7 +68,7 @@ public enum StatementField {
 	OBJECT_ANNOT_ENTRY_UNAMES,
 	///////////////////////////////////////////////////////////////////////////////
 
-	ANNOT_SOURCE_DATABASE,
+	SOURCE,
 	ANNOT_SOURCE_ACCESSION,
 	
 	//Publications

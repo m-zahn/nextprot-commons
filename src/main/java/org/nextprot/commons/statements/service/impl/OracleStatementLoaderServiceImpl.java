@@ -3,38 +3,49 @@ package org.nextprot.commons.statements.service.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.nextprot.commons.statements.AnnotationType;
-import org.nextprot.commons.statements.RawStatement;
+import org.nextprot.commons.statements.Statement;
 import org.nextprot.commons.statements.StatementField;
 import org.nextprot.commons.statements.StatementUtil;
+import org.nextprot.commons.statements.constants.AnnotationType;
+import org.nextprot.commons.statements.constants.NextProtSources;
+import org.nextprot.commons.statements.constants.StatementTableNames;
 import org.nextprot.commons.statements.service.StatementLoaderService;
 import org.nextprot.commons.utils.StringUtils;
 
 public class OracleStatementLoaderServiceImpl implements StatementLoaderService {
 
-	private static final String TABLE = "MAPPED_STATEMENTS";
-
-	private final String table;
-
+	private String tableSuffix = "";
+	
 	public OracleStatementLoaderServiceImpl() {
-		this(TABLE);
 	}
 
-	public OracleStatementLoaderServiceImpl(String table) {
-		this.table = table;
+	public OracleStatementLoaderServiceImpl(String tableSuffix) {
+		this.tableSuffix = tableSuffix;
+	}
+	
+	@Override
+	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSources source) {
+		load(statements, StatementTableNames.RAW_TABLE);
 	}
 
 	@Override
-	public void load(Set<RawStatement> statements) {
-		
-		
+	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSources source) {
+		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ENTRY);
+		load(statements, StatementTableNames.ENTRY_TABLE);
+	}
+	
+	@Override
+	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSources source) {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
-
+		load(statements, StatementTableNames.ISO_TABLE);
+	}
+	
+	private void load(Set<Statement> statements, String tableName) {
+		
 		Connection conn;
 		try {
 
@@ -47,10 +58,10 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 			String bindVariables = StringUtils.mkString(bindVariablesList, "",",", "");
 
 			PreparedStatement pstmt = conn.prepareStatement(
-					"INSERT INTO " + table + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
+					"INSERT INTO " + tableName + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
 			);
 
-			for (RawStatement s : statements) {
+			for (Statement s : statements) {
 				for (int i = 0; i < StatementField.values().length; i++) {
 					String value = s.getValue(StatementField.values()[i]);
 					if (value != null) {
@@ -69,19 +80,23 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 
+
 	@Override
-	public void deleteAll() {
+	public void deleteStatementsForSource(NextProtSources source) {
 
 		try {
 
 			Connection conn = OracleConnectionPool.getConnection();
-			Statement statement = conn.createStatement();
-			statement.executeQuery("DELETE FROM " + table);
+			java.sql.Statement statement = conn.createStatement();
+			statement.addBatch("DELETE FROM " + StatementTableNames.ENTRY_TABLE + " WHERE source = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + StatementTableNames.ISO_TABLE + " WHERE source = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + StatementTableNames.RAW_TABLE + " WHERE source = " + source.getSourceName());
+
 			statement.close();
-			statement.close();
+			conn.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

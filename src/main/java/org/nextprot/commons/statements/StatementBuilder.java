@@ -1,20 +1,6 @@
 package org.nextprot.commons.statements;
 
-import static org.nextprot.commons.statements.StatementField.ANNOTATION_CATEGORY;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_NAME;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_TERMINOLOGY;
-import static org.nextprot.commons.statements.StatementField.ANNOT_LOC_BEGIN_CANONICAL_REF;
-import static org.nextprot.commons.statements.StatementField.ANNOT_LOC_END_CANONICAL_REF;
-import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_DATABASE;
-import static org.nextprot.commons.statements.StatementField.DEBUG_NOTE;
-import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ISOFORM_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.OBJECT_STATEMENT_IDS;
-import static org.nextprot.commons.statements.StatementField.SUBJECT_STATEMENT_IDS;
-import static org.nextprot.commons.statements.StatementField.VARIANT_ORIGINAL_AMINO_ACID;
-import static org.nextprot.commons.statements.StatementField.VARIANT_VARIATION_AMINO_ACID;
+import static org.nextprot.commons.statements.StatementField.*;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -23,6 +9,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.nextprot.commons.statements.constants.AnnotationType;
 import org.nextprot.commons.utils.StringUtils;
 
 public class StatementBuilder {
@@ -39,14 +26,14 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public StatementBuilder addSubjects(Collection<RawStatement> statements) {
+	public StatementBuilder addSubjects(Collection<Statement> statements) {
 
 		Set<String> sortedStatementIds = new TreeSet<String>();
 
-		Iterator<RawStatement> statementsIt = statements.iterator();
+		Iterator<Statement> statementsIt = statements.iterator();
 
 		while (statementsIt.hasNext()) {
-			RawStatement s = statementsIt.next();
+			Statement s = statementsIt.next();
 			sortedStatementIds.add(s.getStatementId());
 		}
 		
@@ -57,7 +44,7 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public StatementBuilder addObject(RawStatement statement) {
+	public StatementBuilder addObject(Statement statement) {
 		addField(OBJECT_STATEMENT_IDS, statement.getStatementId());
 		return this;
 	}
@@ -77,8 +64,8 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public RawStatement build() {
-		RawStatement rs = new RawStatement(keyValues);
+	public Statement build() {
+		Statement rs = new Statement(keyValues);
 		rs.putValue(StatementField.STATEMENT_ID, StatementUtil.computeAndGetAnnotationId(rs, AnnotationType.STATEMENT));
 		return rs;
 	}
@@ -104,7 +91,7 @@ public class StatementBuilder {
 
 	public StatementBuilder addSourceInfo(String sourceAccession, String sourceDatabase) {
 		addField(ANNOT_SOURCE_ACCESSION, sourceAccession);
-		addField(ANNOT_SOURCE_DATABASE, sourceDatabase);
+		addField(SOURCE, sourceDatabase);
 		return this;
 	}
 

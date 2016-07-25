@@ -8,20 +8,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+import org.nextprot.commons.statements.constants.AnnotationType;
 
 public class RawStatementTest {
 	
 	@Test
 	public void testRawStatementEquals() {
-		RawStatement rs1 = StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build();
-		RawStatement rs2 = StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build();
+		Statement rs1 = StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build();
+		Statement rs2 = StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build();
 		assertEquals(rs1, rs2);
 	}
 	
 	
 	@Test
 	public void testRawStatementInsertionInSets() {
-		Set<RawStatement> set1 = new HashSet<>();
+		Set<Statement> set1 = new HashSet<>();
 		set1.add(StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build());
 		set1.add(StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build());
 		
@@ -36,13 +37,13 @@ public class RawStatementTest {
 	@Test
 	public void testAnnotHashUnicity() {
 
-		RawStatement rs1 = StatementBuilder.createNew()
+		Statement rs1 = StatementBuilder.createNew()
 				.addField(StatementField.NEXTPROT_ACCESSION, "NX_P25054")
 				.addField(StatementField.GENE_NAME, "apc")
 				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
 				.addCompulsoryFields("AAA", "BBB", "CCC")
 				.addSourceInfo("CAVA-VP90999", "BED").build();
-		RawStatement rs2 = StatementBuilder.createNew()
+		Statement rs2 = StatementBuilder.createNew()
 				.addField(StatementField.NEXTPROT_ACCESSION, "NX_P25054")
 				.addField(StatementField.GENE_NAME, "apc")
 				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
@@ -57,8 +58,8 @@ public class RawStatementTest {
 	@Test
 	public void testRawStatement2() {
 
-		RawStatement rs1 = StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build();
-		RawStatement rs2 = StatementBuilder.createNew().addMap(rs1).build();
+		Statement rs1 = StatementBuilder.createNew().addCompulsoryFields("AAA", "BBB", "CCC").build();
+		Statement rs2 = StatementBuilder.createNew().addMap(rs1).build();
 
 		assertEquals(rs1, rs2);
 	}

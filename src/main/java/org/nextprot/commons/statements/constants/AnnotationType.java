@@ -1,4 +1,4 @@
-package org.nextprot.commons.statements;
+package org.nextprot.commons.statements.constants;
 
 public enum AnnotationType {
 
