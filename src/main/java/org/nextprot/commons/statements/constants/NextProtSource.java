@@ -1,6 +1,6 @@
 package org.nextprot.commons.statements.constants;
 
-public enum NextProtSources {
+public enum NextProtSource {
 
 	BioEditor ("neXtProt", "http://kant.isb-sib.ch:9000/bioeditor");
 	
@@ -8,7 +8,7 @@ public enum NextProtSources {
 	private String sourceName;
 	private String statementsUrl;
 	
-	NextProtSources(String sourceName, String statementsUrl){
+	NextProtSource(String sourceName, String statementsUrl){
 		this.sourceName = sourceName;
 		this.statementsUrl = statementsUrl;
 	}

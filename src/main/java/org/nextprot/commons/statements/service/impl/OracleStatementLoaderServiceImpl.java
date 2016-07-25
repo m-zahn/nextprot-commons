@@ -11,7 +11,7 @@ import org.nextprot.commons.statements.Statement;
 import org.nextprot.commons.statements.StatementField;
 import org.nextprot.commons.statements.StatementUtil;
 import org.nextprot.commons.statements.constants.AnnotationType;
-import org.nextprot.commons.statements.constants.NextProtSources;
+import org.nextprot.commons.statements.constants.NextProtSource;
 import org.nextprot.commons.statements.constants.StatementTableNames;
 import org.nextprot.commons.statements.service.StatementLoaderService;
 import org.nextprot.commons.utils.StringUtils;
@@ -28,18 +28,18 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 	}
 	
 	@Override
-	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSources source) {
+	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSource source) {
 		load(statements, StatementTableNames.RAW_TABLE);
 	}
 
 	@Override
-	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSources source) {
+	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ENTRY);
 		load(statements, StatementTableNames.ENTRY_TABLE);
 	}
 	
 	@Override
-	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSources source) {
+	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
 		load(statements, StatementTableNames.ISO_TABLE);
 	}
@@ -85,7 +85,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 
 
 	@Override
-	public void deleteStatementsForSource(NextProtSources source) {
+	public void deleteStatementsForSource(NextProtSource source) {
 
 		try {
 
