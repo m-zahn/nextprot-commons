@@ -99,8 +99,8 @@ public class StatementBuilder {
 
 		addField(ANNOTATION_CATEGORY, "variant");// What about mutagenesis
 
-		addField(ANNOT_LOC_BEGIN_CANONICAL_REF, firstPosition);
-		addField(ANNOT_LOC_END_CANONICAL_REF, lastPosition);
+		addField(LOCATION_BEGIN, firstPosition);
+		addField(LOCATION_END, lastPosition);
 
 		addField(VARIANT_ORIGINAL_AMINO_ACID, variationOrigin);
 		addField(VARIANT_VARIATION_AMINO_ACID, variationVariation);
@@ -110,8 +110,8 @@ public class StatementBuilder {
 	}
 
 	public StatementBuilder addLocationFields(String locationBegin, String locationEnd) {
-		addField(ANNOT_LOC_BEGIN_CANONICAL_REF, locationBegin);
-		addField(ANNOT_LOC_END_CANONICAL_REF, locationEnd);
+		addField(LOCATION_BEGIN, locationBegin);
+		addField(LOCATION_END, locationEnd);
 		return this;
 	}
 

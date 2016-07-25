@@ -93,6 +93,8 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 
 		try {
 
+			System.out.println("Deleting statements for " + source);
+			
 			Connection conn = OracleConnectionPool.getConnection();
 			java.sql.Statement statement = conn.createStatement();
 			statement.addBatch("DELETE FROM " + entryTable + " WHERE source = " + source.getSourceName());

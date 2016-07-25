@@ -79,7 +79,9 @@ public class StatementUtil {
 			setValues(complexStatement, StatementField.SUBJECT_ANNOTATION_IDS, subjectIds, StatementField.ANNOTATION_ID, normalStatementsMap);
 
 			String objectStatementsId = complexStatement.getObjectStatementId();
-			setValues(complexStatement, StatementField.OBJECT_ANNOTATION_IDS, objectStatementsId, StatementField.ANNOTATION_ID, normalStatementsMap);
+			if(objectStatementsId != null){
+				setValues(complexStatement, StatementField.OBJECT_ANNOTATION_IDS, objectStatementsId, StatementField.ANNOTATION_ID, normalStatementsMap);
+			}
 			
 			//Compute annotation ids for this complex statement
 			complexStatement.computeAndSetAnnotationIds(annotationType);

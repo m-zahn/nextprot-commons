@@ -13,13 +13,17 @@ public enum StatementField {
 	LOCATION_BEGIN_MASTER (false, true),
 	LOCATION_END_MASTER (false, true),
 	
+	LOCATION_BEGIN (true, false),
+	LOCATION_END (true, false),
+
+	
 	ISOFORM_ACCESSION(true, false),
 
 	
 	// SUBJECTS ///////////////////////////////////////////////////////
-	SUBJECT_STATEMENT_IDS(true, false),
+	SUBJECT_STATEMENT_IDS(true, true),
 	
-	SUBJECT_ANNOTATION_IDS(true, false),
+	SUBJECT_ANNOTATION_IDS,
 
 	SUBJECT_ANNOT_ISO_UNAMES,
 	SUBJECT_ANNOT_ENTRY_UNAMES,
@@ -34,6 +38,8 @@ public enum StatementField {
 
 	ISOFORM_CANONICAL,
 
+	TARGET_ISOFORMS,
+
 	ANNOTATION_ID, 
 	ANNOTATION_NAME, 
 
@@ -47,11 +53,6 @@ public enum StatementField {
 	ANNOT_CV_TERM_ACCESSION(true, true),
 	ANNOT_CV_TERM_NAME,
 	
-	ANNOT_LOC_BEGIN_CANONICAL_REF (true, false),
-	ANNOT_LOC_END_CANONICAL_REF(true, false),
-
-	ANNOT_LOC_BEGIN_MASTER_REF (false, true),
-	ANNOT_LOC_END_MASTER_REF (false, true),
 
 	VARIANT_ORIGINAL_AMINO_ACID(true, true),
 	VARIANT_VARIATION_AMINO_ACID(true, true),
@@ -61,8 +62,8 @@ public enum StatementField {
 	BIOLOGICAL_OBJECT_DATABASE(true, true),
 
 	// OBJECT ANNOTATION ///////////////////////////////////////////////////////////
-	OBJECT_STATEMENT_IDS(true, false),
-	OBJECT_ANNOTATION_IDS(false, true),
+	OBJECT_STATEMENT_IDS(true, true),
+	OBJECT_ANNOTATION_IDS,
 
 	OBJECT_ANNOT_ISO_UNAMES,
 	OBJECT_ANNOT_ENTRY_UNAMES,
