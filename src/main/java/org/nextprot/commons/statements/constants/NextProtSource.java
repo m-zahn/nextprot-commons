@@ -13,8 +13,6 @@ public enum NextProtSource {
 		this.statementsUrl = statementsUrl;
 	}
 	
-	
-	
 	public String getSourceName() {
 		return sourceName;
 	}

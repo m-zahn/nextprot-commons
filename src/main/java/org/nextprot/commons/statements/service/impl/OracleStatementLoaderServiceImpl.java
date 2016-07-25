@@ -18,30 +18,34 @@ import org.nextprot.commons.utils.StringUtils;
 
 public class OracleStatementLoaderServiceImpl implements StatementLoaderService {
 
-	private String tableSuffix = "";
+	private String entryTable =  StatementTableNames.ENTRY_TABLE;
+	private String isoTable =  StatementTableNames.ISO_TABLE;
+	private String rawTable = StatementTableNames.RAW_TABLE;
 	
 	public OracleStatementLoaderServiceImpl() {
 	}
 
 	public OracleStatementLoaderServiceImpl(String tableSuffix) {
-		this.tableSuffix = tableSuffix;
+		entryTable += tableSuffix;
+		isoTable += tableSuffix;
+		rawTable += tableSuffix;
 	}
 	
 	@Override
 	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSource source) {
-		load(statements, StatementTableNames.RAW_TABLE);
+		load(statements, rawTable);
 	}
 
 	@Override
 	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ENTRY);
-		load(statements, StatementTableNames.ENTRY_TABLE);
+		load(statements, entryTable);
 	}
 	
 	@Override
 	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
-		load(statements, StatementTableNames.ISO_TABLE);
+		load(statements, isoTable);
 	}
 	
 	private void load(Set<Statement> statements, String tableName) {
@@ -91,9 +95,9 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 
 			Connection conn = OracleConnectionPool.getConnection();
 			java.sql.Statement statement = conn.createStatement();
-			statement.addBatch("DELETE FROM " + StatementTableNames.ENTRY_TABLE + " WHERE source = " + source.getSourceName());
-			statement.addBatch("DELETE FROM " + StatementTableNames.ISO_TABLE + " WHERE source = " + source.getSourceName());
-			statement.addBatch("DELETE FROM " + StatementTableNames.RAW_TABLE + " WHERE source = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + entryTable + " WHERE source = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + isoTable + " WHERE source = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + rawTable + " WHERE source = " + source.getSourceName());
 
 			statement.close();
 			conn.close();
