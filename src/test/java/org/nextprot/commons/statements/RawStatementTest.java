@@ -49,9 +49,9 @@ public class RawStatementTest {
 				.addCompulsoryFields("AAA", "BBB", "CCC")
 				.addSourceInfo("XPTO", "Caviar").build();
 
-		StatementUtil.computeAndSetAnnotationIdsForRawStatements(Arrays.asList(rs1, rs2));
+		StatementUtil.computeAndSetAnnotationIdsForRawStatements(Arrays.asList(rs1, rs2), AnnotationType.ISOFORM);
 		assertNotEquals(rs1, rs2); 
-		assertEquals(rs1.getValue(StatementField.ANNOT_ISO_ID), rs2.getValue(StatementField.ANNOT_ISO_ID));
+		assertEquals(rs1.getValue(StatementField.ANNOTATION_ID), rs2.getValue(StatementField.ANNOTATION_ID));
 	}
 
 	@Test

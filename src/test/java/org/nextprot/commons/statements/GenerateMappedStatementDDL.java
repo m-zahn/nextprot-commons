@@ -21,8 +21,7 @@ public class GenerateMappedStatementDDL {
 		sb.append(");\n");
 
 		sb.append("CREATE INDEX MS_" + StatementField.ENTRY_ACCESSION.name() + "_IDX ON " + tableName + " ( " + StatementField.ENTRY_ACCESSION.name() + " );\n");
-		sb.append("CREATE INDEX MS_" + StatementField.ANNOT_ISO_ID.name() + "_IDX ON " + tableName + " ( " + StatementField.ANNOT_ISO_ID.name() + " );\n");
-		sb.append("CREATE INDEX MS_" + StatementField.ANNOT_ENTRY_ID.name() + "_IDX ON " + tableName + " ( " + StatementField.ANNOT_ENTRY_ID.name() + " );\n");
+		sb.append("CREATE INDEX MS_" + StatementField.ANNOTATION_ID.name() + "_IDX ON " + tableName + " ( " + StatementField.ANNOTATION_ID.name() + " );\n");
 
 		sb.append("GRANT SELECT ON MAPPED_STATEMENTS_NEXT TO nxbed_read;\n");
 

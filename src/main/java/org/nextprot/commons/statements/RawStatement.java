@@ -32,11 +32,10 @@ public class RawStatement extends TreeMap<String, String>{
 		return put(field.name(), value);
 	}
 	
-	void computeAndSetAnnotationIds(){
-		putValue(StatementField.ANNOT_ISO_ID, StatementUtil.computeAndGetAnnotationId(this,AnnotationType.ISOFORM));
-		putValue(StatementField.ANNOT_ENTRY_ID, StatementUtil.computeAndGetAnnotationId(this,AnnotationType.ENTRY));
+	void computeAndSetAnnotationIds(AnnotationType annotationType){
+		putValue(StatementField.ANNOTATION_ID, StatementUtil.computeAndGetAnnotationId(this,annotationType));
 	}
-	
+
 	public String getSubjectStatementIds() {
 		return getValue(StatementField.SUBJECT_STATEMENT_IDS);
 	}

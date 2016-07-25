@@ -19,8 +19,7 @@ public enum StatementField {
 	// SUBJECTS ///////////////////////////////////////////////////////
 	SUBJECT_STATEMENT_IDS(true, false),
 	
-	SUBJECT_ANNOT_ISO_IDS(true, false),
-	SUBJECT_ANNOT_ENTRY_IDS(false, true),
+	SUBJECT_ANNOTATION_IDS(true, false),
 
 	SUBJECT_ANNOT_ISO_UNAMES,
 	SUBJECT_ANNOT_ENTRY_UNAMES,
@@ -35,7 +34,7 @@ public enum StatementField {
 
 	ISOFORM_CANONICAL,
 
-	ANNOTION_ID, 
+	ANNOTATION_ID, 
 	ANNOTATION_NAME, 
 
 	IS_NEGATIVE(true, true), 
@@ -63,8 +62,7 @@ public enum StatementField {
 
 	// OBJECT ANNOTATION ///////////////////////////////////////////////////////////
 	OBJECT_STATEMENT_IDS(true, false),
-	OBJECT_ANNOT_ISO_IDS(true, false),
-	OBJECT_ANNOT_ENTRY_IDS(false, true),
+	OBJECT_ANNOTATION_IDS(false, true),
 
 	OBJECT_ANNOT_ISO_UNAMES,
 	OBJECT_ANNOT_ENTRY_UNAMES,

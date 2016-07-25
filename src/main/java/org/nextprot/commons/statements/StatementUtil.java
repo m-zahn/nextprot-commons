@@ -57,8 +57,7 @@ public class StatementUtil {
 
 	}
 	
-	public static void computeAndSetAnnotationIdsForRawStatements(Collection<RawStatement> statements) {
-		
+	public static void computeAndSetAnnotationIdsForRawStatements(Collection<RawStatement> statements, AnnotationType annotationType){
 		
 		HashMap<String, RawStatement> normalStatementsMap = new HashMap<String, RawStatement>();
 		List<RawStatement> statementsOnModifiedSubjects = new ArrayList<RawStatement>();
@@ -66,7 +65,7 @@ public class StatementUtil {
 		//Takes all normal statements and put them in a map and all the other put them in a list 
 		for(RawStatement s : statements){
 			if(!s.hasModifiedSubject()){
-				s.computeAndSetAnnotationIds();
+				s.computeAndSetAnnotationIds(annotationType);
 				normalStatementsMap.put(s.getStatementId(), s);
 			}else {
 				statementsOnModifiedSubjects.add(s);
@@ -76,15 +75,13 @@ public class StatementUtil {
 		for(RawStatement complexStatement : statementsOnModifiedSubjects){
 			
 			String subjectIds = complexStatement.getSubjectStatementIds();
-			setValues(complexStatement, StatementField.SUBJECT_ANNOT_ISO_IDS, subjectIds, StatementField.ANNOT_ISO_ID, normalStatementsMap);
-			setValues(complexStatement, StatementField.SUBJECT_ANNOT_ENTRY_IDS, subjectIds, StatementField.ANNOT_ENTRY_ID, normalStatementsMap);
+			setValues(complexStatement, StatementField.SUBJECT_ANNOTATION_IDS, subjectIds, StatementField.ANNOTATION_ID, normalStatementsMap);
 
 			String objectStatementsId = complexStatement.getObjectStatementId();
-			setValues(complexStatement, StatementField.OBJECT_ANNOT_ISO_IDS, objectStatementsId, StatementField.ANNOT_ISO_ID, normalStatementsMap);
-			setValues(complexStatement, StatementField.OBJECT_ANNOT_ENTRY_IDS, objectStatementsId, StatementField.ANNOT_ENTRY_ID, normalStatementsMap);
+			setValues(complexStatement, StatementField.OBJECT_ANNOTATION_IDS, objectStatementsId, StatementField.ANNOTATION_ID, normalStatementsMap);
 			
 			//Compute annotation ids for this complex statement
-			complexStatement.computeAndSetAnnotationIds();
+			complexStatement.computeAndSetAnnotationIds(annotationType);
 		}
 	}
 	

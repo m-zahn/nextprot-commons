@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.nextprot.commons.statements.AnnotationType;
 import org.nextprot.commons.statements.RawStatement;
 import org.nextprot.commons.statements.StatementField;
 import org.nextprot.commons.statements.StatementUtil;
@@ -32,7 +33,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 	public void load(Set<RawStatement> statements) {
 		
 		
-		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements);
+		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
 
 		Connection conn;
 		try {
