@@ -16,6 +16,9 @@ public enum StatementField {
 	
 	ISOFORM_ACCESSION(true, false),
 
+	ANNOTATION_SUBJECT_SPECIES,
+	ANNOTATION_OBJECT_SPECIES,
+	
 	
 	// SUBJECTS ///////////////////////////////////////////////////////
 	SUBJECT_STATEMENT_IDS(true, false),
@@ -38,7 +41,11 @@ public enum StatementField {
 	ANNOT_ENTRY_ID, 
 	ANNOT_ENTRY_UNAME, 
 
-	STATEMENT_QUALITY, 
+	IS_NEGATIVE(true, true), 
+
+	EVIDENCE_QUALITY, 
+	EVIDENCE_INTENSITY,
+	EVIDENCE_NOTE,
 
 	ANNOT_CV_TERM_TERMINOLOGY(true, true),
 	ANNOT_CV_TERM_ACCESSION(true, true),
@@ -55,7 +62,6 @@ public enum StatementField {
 
 	VARIANT_ORIGINAL_GENOMIC,
 	VARIANT_VARIATION_GENOMIC,
-	
 	
 	BIOLOGICAL_OBJECT_TYPE(true, true),
 	BIOLOGICAL_OBJECT_ACCESSION(true, true),
@@ -75,14 +81,14 @@ public enum StatementField {
 	
 	//Publications
 	REFERENCE_PUBMED,
+	REFERENCE_CROSS_REF,
+	REFERENCE_CROSS_DOI,
 
 	//Experimental context fields
 	EXP_CONTEXT_ECO_DETECT_METHOD,
-	EXP_CONTEXT_PROPERTY_INTENSITY,
-	EXP_CTX_PRPTY_PROTEIN_ORIGIN, //CHECK THIS	
-
+	EXP_CONTEXT_ECO_MUTATION,
+	EXP_CONTEXT_ECO_ISS,
 	
-
 	DEBUG_NOTE //Used for errors, warnings, debug information
 	;
 	
