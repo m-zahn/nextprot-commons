@@ -16,7 +16,7 @@ import org.nextprot.commons.utils.StringUtils;
 
 public class OracleStatementLoaderServiceImpl implements StatementLoaderService {
 
-	private static final String TABLE = "MAPPED_STATEMENTS_NEXT";
+	private static final String TABLE = "MAPPED_STATEMENTS";
 
 	private final String table;
 

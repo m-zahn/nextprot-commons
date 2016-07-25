@@ -3,7 +3,6 @@ package org.nextprot.commons.statements;
 public enum StatementField {
 
 	STATEMENT_ID, 
-	RAW_STATEMENT_ID, 
 	
 	// According with https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
 	NEXTPROT_ACCESSION, //Used for raw statements
@@ -16,9 +15,6 @@ public enum StatementField {
 	
 	ISOFORM_ACCESSION(true, false),
 
-	ANNOTATION_SUBJECT_SPECIES,
-	ANNOTATION_OBJECT_SPECIES,
-	
 	
 	// SUBJECTS ///////////////////////////////////////////////////////
 	SUBJECT_STATEMENT_IDS(true, false),
@@ -28,6 +24,10 @@ public enum StatementField {
 
 	SUBJECT_ANNOT_ISO_UNAMES,
 	SUBJECT_ANNOT_ENTRY_UNAMES,
+
+
+	ANNOTATION_SUBJECT_SPECIES,
+	ANNOTATION_OBJECT_SPECIES,
 	////////////////////////////////////////////////////////////////////
 
 	ANNOTATION_CATEGORY(true, true),
@@ -35,11 +35,8 @@ public enum StatementField {
 
 	ISOFORM_CANONICAL,
 
-	ANNOT_ISO_ID, 
-	ANNOT_ISO_UNAME, 
-
-	ANNOT_ENTRY_ID, 
-	ANNOT_ENTRY_UNAME, 
+	ANNOTION_ID, 
+	ANNOTATION_NAME, 
 
 	IS_NEGATIVE(true, true), 
 
@@ -60,9 +57,6 @@ public enum StatementField {
 	VARIANT_ORIGINAL_AMINO_ACID(true, true),
 	VARIANT_VARIATION_AMINO_ACID(true, true),
 
-	VARIANT_ORIGINAL_GENOMIC,
-	VARIANT_VARIATION_GENOMIC,
-	
 	BIOLOGICAL_OBJECT_TYPE(true, true),
 	BIOLOGICAL_OBJECT_ACCESSION(true, true),
 	BIOLOGICAL_OBJECT_DATABASE(true, true),
@@ -89,7 +83,10 @@ public enum StatementField {
 	EXP_CONTEXT_ECO_MUTATION,
 	EXP_CONTEXT_ECO_ISS,
 	
-	DEBUG_NOTE //Used for errors, warnings, debug information
+	DEBUG_NOTE, //Used for errors, warnings, debug information
+	
+	
+	RAW_STATEMENT_ID //Keep a reference to the Raw statement
 	;
 	
 
