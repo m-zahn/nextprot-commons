@@ -97,7 +97,7 @@ public class StatementBuilder {
 
 	public StatementBuilder addVariantInfo(String annotationCategory, String firstPosition, String lastPosition, String variationOrigin, String variationVariation) {
 
-		if(annotationCategory == null || !annotationCategory.equals("variant") || !annotationCategory.equals("mutagenesis")) {
+		if(annotationCategory == null || !(annotationCategory.equals("variant") || annotationCategory.equals("mutagenesis"))) {
 			throw new RuntimeException("annotation category " + annotationCategory + " is not allowed for variant");
 		}
 		addField(ANNOTATION_CATEGORY, annotationCategory);
