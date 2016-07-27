@@ -33,22 +33,24 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 	
 	@Override
 	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSource source) {
-		load(statements, rawTable);
+		load(statements, rawTable, source);
 	}
 
 	@Override
 	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ENTRY);
-		load(statements, entryTable);
+		load(statements, entryTable, source);
 	}
 	
 	@Override
 	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
-		load(statements, isoTable);
+		load(statements, isoTable, source);
 	}
 	
-	private void load(Set<Statement> statements, String tableName) {
+	private void load(Set<Statement> statements, String tableName, NextProtSource source) {
+		
+		long time = System.currentTimeMillis();
 		
 		Connection conn;
 		try {
@@ -67,7 +69,11 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 
 			for (Statement s : statements) {
 				for (int i = 0; i < StatementField.values().length; i++) {
-					String value = s.getValue(StatementField.values()[i]);
+					StatementField sf = StatementField.values()[i];
+					String value = null;
+					if(sf.equals(StatementField.SOURCE)){
+						value = source.getSourceName();
+					}else value = s.getValue(sf); 
 					if (value != null) {
 						pstmt.setString(i + 1, value.replace("'", "''"));
 					} else {
@@ -97,9 +103,9 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 			
 			Connection conn = OracleConnectionPool.getConnection();
 			java.sql.Statement statement = conn.createStatement();
-			statement.addBatch("DELETE FROM " + entryTable + " WHERE source = " + source.getSourceName());
-			statement.addBatch("DELETE FROM " + isoTable + " WHERE source = " + source.getSourceName());
-			statement.addBatch("DELETE FROM " + rawTable + " WHERE source = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + entryTable + " WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + isoTable + " WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + rawTable + " WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
 
 			statement.close();
 			conn.close();

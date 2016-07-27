@@ -95,10 +95,13 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public StatementBuilder addVariantInfo(String firstPosition, String lastPosition, String variationOrigin, String variationVariation) {
+	public StatementBuilder addVariantInfo(String annotationCategory, String firstPosition, String lastPosition, String variationOrigin, String variationVariation) {
 
-		addField(ANNOTATION_CATEGORY, "variant");// What about mutagenesis
-
+		if(annotationCategory == null || !annotationCategory.equals("variant") || !annotationCategory.equals("mutagenesis")) {
+			throw new RuntimeException("annotation category " + annotationCategory + " is not allowed for variant");
+		}
+		addField(ANNOTATION_CATEGORY, annotationCategory);
+		
 		addField(LOCATION_BEGIN, firstPosition);
 		addField(LOCATION_END, lastPosition);
 
