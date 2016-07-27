@@ -76,10 +76,11 @@ public class StatementBuilder {
 		return this;
 	}
 
-	public StatementBuilder addCompulsoryFields(String entryAccession, String isoformAccession, String annotationCategory) {
+	public StatementBuilder addCompulsaryFields(String entryAccession, String isoformAccession, String annotationCategory, QualityQualifier quality) {
 		addField(ENTRY_ACCESSION, entryAccession);
 		addField(ISOFORM_ACCESSION, isoformAccession);
 		addField(ANNOTATION_CATEGORY, annotationCategory);
+		addQuality(quality);
 		return this;
 	}
 
