@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.nextprot.commons.algo.MD5Algo;
+import org.nextprot.commons.constants.QualityQualifier;
 import org.nextprot.commons.statements.constants.AnnotationType;
 import org.nextprot.commons.utils.StringUtils;
 
@@ -65,13 +66,14 @@ public class StatementUtil {
 	static void checkQuality(Collection<Statement> statements){
 		
 		for(Statement s : statements){
-			if(s.getValue(StatementField.EVIDENCE_QUALITY) == null){
+			String evidenceQuality = s.getValue(StatementField.EVIDENCE_QUALITY);
+			if(evidenceQuality == null){
 				throw new RuntimeException("Statement field EVIDENCE_QUALITY can't be null");
 			}
 			try {
-				StatementField.valueOf(s.getValue(StatementField.EVIDENCE_QUALITY));
+				QualityQualifier.valueOf(s.getValue(StatementField.EVIDENCE_QUALITY));
 			}catch (IllegalArgumentException e){
-				throw new RuntimeException("Statement field EVIDENCE_QUALITY must be set to either GOLD or SILVER");
+				throw new RuntimeException("Statement field EVIDENCE_QUALITY must be set to either GOLD or SILVER, but was" + evidenceQuality);
 			}
 		}
 	}

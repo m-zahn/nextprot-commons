@@ -33,6 +33,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 	
 	@Override
 	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSource source) {
+		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.STATEMENT);
 		load(statements, rawTable, source);
 	}
 
