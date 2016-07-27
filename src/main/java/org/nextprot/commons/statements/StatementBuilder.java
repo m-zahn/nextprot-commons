@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.nextprot.commons.constants.QualityQualifier;
 import org.nextprot.commons.statements.constants.AnnotationType;
 import org.nextprot.commons.utils.StringUtils;
 
@@ -89,6 +90,12 @@ public class StatementBuilder {
 		return this;
 	}
 
+	public StatementBuilder addQuality(QualityQualifier quality) {
+		addField(StatementField.EVIDENCE_QUALITY, quality.name());
+		return this;
+	}
+
+	
 	public StatementBuilder addSourceInfo(String sourceAccession, String sourceDatabase) {
 		addField(ANNOT_SOURCE_ACCESSION, sourceAccession);
 		addField(SOURCE, sourceDatabase);

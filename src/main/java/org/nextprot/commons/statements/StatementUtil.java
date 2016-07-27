@@ -58,7 +58,28 @@ public class StatementUtil {
 
 	}
 	
+	static void checkStatementsValidity(Collection<Statement> statements){
+		checkQuality(statements);
+	}
+	
+	static void checkQuality(Collection<Statement> statements){
+		
+		for(Statement s : statements){
+			if(s.getValue(StatementField.EVIDENCE_QUALITY) == null){
+				throw new RuntimeException("Statement field EVIDENCE_QUALITY can't be null");
+			}
+			try {
+				StatementField.valueOf(s.getValue(StatementField.EVIDENCE_QUALITY));
+			}catch (IllegalArgumentException e){
+				throw new RuntimeException("Statement field EVIDENCE_QUALITY must be set to either GOLD or SILVER");
+			}
+		}
+	}
+		
+		
 	public static void computeAndSetAnnotationIdsForRawStatements(Collection<Statement> statements, AnnotationType annotationType){
+		
+		checkStatementsValidity(statements);
 		
 		HashMap<String, Statement> normalStatementsMap = new HashMap<String, Statement>();
 		List<Statement> statementsOnModifiedSubjects = new ArrayList<Statement>();
