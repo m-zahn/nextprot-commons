@@ -1,6 +1,20 @@
 package org.nextprot.commons.statements;
 
-import static org.nextprot.commons.statements.StatementField.*;
+import static org.nextprot.commons.statements.StatementField.ANNOTATION_CATEGORY;
+import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_NAME;
+import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_TERMINOLOGY;
+import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.DEBUG_NOTE;
+import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.ISOFORM_ACCESSION;
+import static org.nextprot.commons.statements.StatementField.LOCATION_BEGIN;
+import static org.nextprot.commons.statements.StatementField.LOCATION_END;
+import static org.nextprot.commons.statements.StatementField.OBJECT_STATEMENT_IDS;
+import static org.nextprot.commons.statements.StatementField.SOURCE;
+import static org.nextprot.commons.statements.StatementField.SUBJECT_STATEMENT_IDS;
+import static org.nextprot.commons.statements.StatementField.VARIANT_ORIGINAL_AMINO_ACID;
+import static org.nextprot.commons.statements.StatementField.VARIANT_VARIATION_AMINO_ACID;
 
 import java.util.Collection;
 import java.util.Iterator;

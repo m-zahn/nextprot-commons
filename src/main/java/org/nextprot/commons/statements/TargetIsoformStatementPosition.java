@@ -1,29 +1,47 @@
 package org.nextprot.commons.statements;
 
-public class TargetIsoformStatementPosition {
+public class TargetIsoformStatementPosition implements Comparable<TargetIsoformStatementPosition>{
 
+	private String isoformName;
+	private String specificity;
 	private Integer begin;
 	private Integer end;
 	
-	public TargetIsoformStatementPosition(){
+	public TargetIsoformStatementPosition() {
+		
 	}
-	
-	public TargetIsoformStatementPosition(Integer begin, Integer end){
+
+	public TargetIsoformStatementPosition(String isoformName, String specificity) {
+		this.isoformName = isoformName;
+		this.specificity = specificity;
+	}
+
+	public TargetIsoformStatementPosition(String isoformName, Integer begin, Integer end, String specificity) {
+		this.isoformName = isoformName;
+		this.specificity = specificity;
 		this.begin = begin;
 		this.end = end;
 	}
+	
+	public String getIsoformName() {
+		return isoformName;
+	}
 
+	public String getSpecificity() {
+		return specificity;
+	}
+	
 	public Integer getBegin() {
 		return begin;
-	}
-	public void setBegin(Integer begin) {
-		this.begin = begin;
 	}
 	public Integer getEnd() {
 		return end;
 	}
-	public void setEnd(Integer end) {
-		this.end = end;
+
+	@Override
+	public int compareTo(TargetIsoformStatementPosition o) {
+		return isoformName.compareTo(o.isoformName);
 	}
+	
 
 }

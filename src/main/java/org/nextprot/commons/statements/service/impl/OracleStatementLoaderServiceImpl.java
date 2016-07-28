@@ -104,9 +104,10 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 			
 			Connection conn = OracleConnectionPool.getConnection();
 			java.sql.Statement statement = conn.createStatement();
-			statement.addBatch("DELETE FROM " + entryTable + " WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
-			statement.addBatch("DELETE FROM " + isoTable + " WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
-			statement.addBatch("DELETE FROM " + rawTable + " WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
+
+			statement.addBatch("DELETE FROM " + entryTable );// WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + isoTable ); // WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
+			statement.addBatch("DELETE FROM " + rawTable ); // WHERE " + StatementField.SOURCE.name() + " = " + source.getSourceName());
 
 			statement.close();
 			conn.close();
