@@ -11,6 +11,4 @@ public interface StatementLoaderService {
 	void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSource source);
 	void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSource source);
 	
-	void deleteStatementsForSource(NextProtSource source);
-
 }

@@ -57,6 +57,11 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 		try {
 
 			conn = OracleConnectionPool.getConnection();
+			
+			java.sql.Statement deleteStatement = conn.createStatement();
+			deleteStatement.addBatch("DELETE FROM " + tableName + " WHERE SOURCE = '" + source.getSourceName() + "'");
+
+			
 			String columnNames = StringUtils.mkString(StatementField.values(), "", ",", "");
 			List<String> bindVariablesList = new ArrayList<>();
 			for (int i=0 ; i<StatementField.values().length; i++) {
@@ -84,7 +89,9 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 				pstmt.addBatch();
 			}
 
+			deleteStatement.executeBatch();
 			pstmt.executeBatch();
+			deleteStatement.close();
 			pstmt.close();
 			conn.close();
 
@@ -92,30 +99,6 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 			e.printStackTrace();
 		}
 		
-	}
-
-
-	@Override
-	public void deleteStatementsForSource(NextProtSource source) {
-
-		try {
-
-			System.out.println("Deleting statements for " + source);
-			
-			Connection conn = OracleConnectionPool.getConnection();
-			java.sql.Statement statement = conn.createStatement();
-
-			statement.addBatch("DELETE FROM " + entryTable + " WHERE SOURCE = '" + source.getSourceName() + "'");
-			statement.addBatch("DELETE FROM " + isoTable + " WHERE SOURCE = '" + source.getSourceName() + "'");
-			statement.addBatch("DELETE FROM " + rawTable + " WHERE SOURCE = '" + source.getSourceName() + "'");
-
-			statement.executeBatch();
-			statement.close();
-			conn.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 }
