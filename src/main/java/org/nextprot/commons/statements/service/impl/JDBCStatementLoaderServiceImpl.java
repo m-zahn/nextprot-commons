@@ -2,7 +2,6 @@ package org.nextprot.commons.statements.service.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,16 +15,16 @@ import org.nextprot.commons.statements.constants.StatementTableNames;
 import org.nextprot.commons.statements.service.StatementLoaderService;
 import org.nextprot.commons.utils.StringUtils;
 
-public class OracleStatementLoaderServiceImpl implements StatementLoaderService {
+public class JDBCStatementLoaderServiceImpl implements StatementLoaderService {
 
 	private String entryTable =  StatementTableNames.ENTRY_TABLE;
 	private String isoTable =  StatementTableNames.ISO_TABLE;
 	private String rawTable = StatementTableNames.RAW_TABLE;
 	
-	public OracleStatementLoaderServiceImpl() {
+	public JDBCStatementLoaderServiceImpl() {
 	}
 
-	public OracleStatementLoaderServiceImpl(String tableSuffix) {
+	public JDBCStatementLoaderServiceImpl(String tableSuffix) {
 		entryTable += tableSuffix;
 		isoTable += tableSuffix;
 		rawTable += tableSuffix;
@@ -51,15 +50,13 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 	
 	private void load(Set<Statement> statements, String tableName, NextProtSource source) {
 		
-		long time = System.currentTimeMillis();
-		
 		Connection conn;
 		try {
 
-			conn = OracleConnectionPool.getConnection();
+			conn = StatementConnectionPool.getConnection();
 			
 			java.sql.Statement deleteStatement = conn.createStatement();
-			deleteStatement.addBatch("DELETE FROM " + tableName + " WHERE SOURCE = '" + source.getSourceName() + "'");
+			deleteStatement.addBatch("DELETE FROM nxflat." + tableName + " WHERE SOURCE = '" + source.getSourceName() + "'");
 
 			
 			String columnNames = StringUtils.mkString(StatementField.values(), "", ",", "");
@@ -70,7 +67,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 			String bindVariables = StringUtils.mkString(bindVariablesList, "",",", "");
 
 			PreparedStatement pstmt = conn.prepareStatement(
-					"INSERT INTO " + tableName + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
+					"INSERT INTO nxflat." + tableName + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
 			);
 
 			for (Statement s : statements) {
@@ -83,7 +80,7 @@ public class OracleStatementLoaderServiceImpl implements StatementLoaderService 
 					if (value != null) {
 						pstmt.setString(i + 1, value.replace("'", "''"));
 					} else {
-						pstmt.setNull(i + 1, java.sql.Types.NVARCHAR);
+						pstmt.setNull(i + 1, java.sql.Types.VARCHAR);
 					}
 				}
 				pstmt.addBatch();
