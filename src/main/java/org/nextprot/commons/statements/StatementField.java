@@ -25,10 +25,6 @@ public enum StatementField {
 	
 	SUBJECT_ANNOTATION_IDS,
 
-	SUBJECT_ANNOT_ISO_UNAMES,
-	SUBJECT_ANNOT_ENTRY_UNAMES,
-
-
 	ANNOTATION_SUBJECT_SPECIES,
 	ANNOTATION_OBJECT_SPECIES,
 	////////////////////////////////////////////////////////////////////
@@ -75,6 +71,7 @@ public enum StatementField {
 	SOURCE,
 	ANNOT_SOURCE_ACCESSION,
 	
+	
 	//Publications
 	REFERENCE_PUBMED,
 	REFERENCE_CROSS_REF,
@@ -84,6 +81,13 @@ public enum StatementField {
 	EXP_CONTEXT_ECO_DETECT_METHOD,
 	EXP_CONTEXT_ECO_MUTATION,
 	EXP_CONTEXT_ECO_ISS,
+
+	
+	//EVIDENCE
+	ASSIGNED_BY,
+	ASSIGMENT_METHOD,
+	RESOURCE_TYPE,
+	
 	
 	DEBUG_NOTE, //Used for errors, warnings, debug information
 	
