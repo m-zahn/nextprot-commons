@@ -71,23 +71,22 @@ public enum StatementField {
 	SOURCE,
 	ANNOT_SOURCE_ACCESSION,
 	
+	//Experimental context fields
+	EXP_CONTEXT_ECO_DETECT_METHOD,
+	EXP_CONTEXT_ECO_MUTATION,
+	EXP_CONTEXT_ECO_ISS,
 	
 	//Publications
 	REFERENCE_PUBMED,
 	REFERENCE_CROSS_REF,
 	REFERENCE_CROSS_DOI,
 
-	//Experimental context fields
-	EXP_CONTEXT_ECO_DETECT_METHOD,
-	EXP_CONTEXT_ECO_MUTATION,
-	EXP_CONTEXT_ECO_ISS,
-
 	
 	//EVIDENCE
 	ASSIGNED_BY,
 	ASSIGMENT_METHOD,
 	RESOURCE_TYPE,
-	
+	EVIDENCE_RESOURCE_ID, //This is the ID of the resource in the database database only in the mapped statements
 	
 	DEBUG_NOTE, //Used for errors, warnings, debug information
 	
