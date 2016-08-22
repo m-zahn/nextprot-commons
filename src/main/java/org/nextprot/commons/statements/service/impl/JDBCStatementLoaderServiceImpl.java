@@ -2,6 +2,7 @@ package org.nextprot.commons.statements.service.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -31,31 +32,34 @@ public class JDBCStatementLoaderServiceImpl implements StatementLoaderService {
 	}
 	
 	@Override
-	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSource source) {
+	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSource source) throws SQLException {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.STATEMENT);
 		load(statements, rawTable, source);
 	}
 
 	@Override
-	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
+	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) throws SQLException {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ENTRY);
 		load(statements, entryTable, source);
 	}
 	
 	@Override
-	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) {
+	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) throws SQLException {
 		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
 		load(statements, isoTable, source);
 	}
 	
-	private void load(Set<Statement> statements, String tableName, NextProtSource source) {
+	private void load(Set<Statement> statements, String tableName, NextProtSource source) throws SQLException {
 		
-		Connection conn;
+		Connection conn = null;
+		java.sql.Statement deleteStatement = null;
+		PreparedStatement pstmt = null;
+		
 		try {
 
 			conn = StatementConnectionPool.getConnection();
 			
-			java.sql.Statement deleteStatement = conn.createStatement();
+			deleteStatement = conn.createStatement();
 			deleteStatement.addBatch("DELETE FROM nxflat." + tableName + " WHERE SOURCE = '" + source.getSourceName() + "'");
 
 			
@@ -66,7 +70,7 @@ public class JDBCStatementLoaderServiceImpl implements StatementLoaderService {
 			}
 			String bindVariables = StringUtils.mkString(bindVariablesList, "",",", "");
 
-			PreparedStatement pstmt = conn.prepareStatement(
+			pstmt = conn.prepareStatement(
 					"INSERT INTO nxflat." + tableName + " (" + columnNames + ") VALUES ( " + bindVariables + ")"
 			);
 
@@ -88,12 +92,21 @@ public class JDBCStatementLoaderServiceImpl implements StatementLoaderService {
 
 			deleteStatement.executeBatch();
 			pstmt.executeBatch();
-			deleteStatement.close();
-			pstmt.close();
-			conn.close();
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} finally {
+
+			if(deleteStatement != null){
+				deleteStatement.close();
+			}
+			
+			if(pstmt  != null){
+				pstmt.close();
+			}
+		
+			if(conn != null){
+				conn.close();
+			}
+
 		}
 		
 	}
