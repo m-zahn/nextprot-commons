@@ -6,6 +6,7 @@ public class TargetIsoformStatementPosition implements Comparable<TargetIsoformS
 	private String specificity;
 	private Integer begin;
 	private Integer end;
+	private String name;
 	
 	public TargetIsoformStatementPosition() {
 		
@@ -16,11 +17,12 @@ public class TargetIsoformStatementPosition implements Comparable<TargetIsoformS
 		this.specificity = specificity;
 	}
 
-	public TargetIsoformStatementPosition(String isoformName, Integer begin, Integer end, String specificity) {
+	public TargetIsoformStatementPosition(String isoformName, Integer begin, Integer end, String specificity, String name) {
 		this.isoformName = isoformName;
 		this.specificity = specificity;
 		this.begin = begin;
 		this.end = end;
+		this.name = name;
 	}
 	
 	public String getIsoformName() {
@@ -41,6 +43,14 @@ public class TargetIsoformStatementPosition implements Comparable<TargetIsoformS
 	@Override
 	public int compareTo(TargetIsoformStatementPosition o) {
 		return isoformName.compareTo(o.isoformName);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 

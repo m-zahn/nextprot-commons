@@ -19,7 +19,7 @@ public class StatementUtil {
 	public static String computeAndGetAnnotationId(Statement statement, AnnotationType type) {
 
 		// Filter fields which are used to compute unicity
-		Set<StatementField> unicityFields = new TreeSet<StatementField>();
+		List<StatementField> unicityFields = new ArrayList<StatementField>();
 		StatementField[] fields = StatementField.values();
 		for (StatementField field : fields) {
 			// According with
@@ -41,7 +41,7 @@ public class StatementUtil {
 			}
 		}
 
-		TreeSet<String> contentItems = new TreeSet<String>();
+		List<String> contentItems = new ArrayList<String>();
 		for (StatementField unicityField : unicityFields) {
 			String value = statement.getValue(unicityField);
 			if (value != null) {
