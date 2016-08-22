@@ -59,7 +59,8 @@ public enum StatementField {
 	BIOLOGICAL_OBJECT_TYPE(true, true),
 	BIOLOGICAL_OBJECT_ACCESSION(true, true),
 	BIOLOGICAL_OBJECT_DATABASE(true, true),
-
+	BIOLOGICAL_OBJECT_NAME(true, true),
+	
 	// OBJECT ANNOTATION ///////////////////////////////////////////////////////////
 	OBJECT_STATEMENT_IDS(true, true),
 	OBJECT_ANNOTATION_IDS,
