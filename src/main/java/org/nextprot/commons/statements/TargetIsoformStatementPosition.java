@@ -2,7 +2,7 @@ package org.nextprot.commons.statements;
 
 public class TargetIsoformStatementPosition implements Comparable<TargetIsoformStatementPosition>{
 
-	private String isoformName;
+	private String isoformAccession;
 	private String specificity;
 	private Integer begin;
 	private Integer end;
@@ -12,21 +12,22 @@ public class TargetIsoformStatementPosition implements Comparable<TargetIsoformS
 		
 	}
 
-	public TargetIsoformStatementPosition(String isoformName, String specificity) {
-		this.isoformName = isoformName;
+	public TargetIsoformStatementPosition(String isoformAccession, String specificity, String name) {
+		this.isoformAccession = isoformAccession;
 		this.specificity = specificity;
+		this.name = name;
 	}
 
-	public TargetIsoformStatementPosition(String isoformName, Integer begin, Integer end, String specificity, String name) {
-		this.isoformName = isoformName;
+	public TargetIsoformStatementPosition(String isoformAccession, Integer begin, Integer end, String specificity, String name) {
+		this.isoformAccession = isoformAccession;
 		this.specificity = specificity;
 		this.begin = begin;
 		this.end = end;
 		this.name = name;
 	}
 	
-	public String getIsoformName() {
-		return isoformName;
+	public String getIsoformAccession() {
+		return isoformAccession;
 	}
 
 	public String getSpecificity() {
@@ -42,7 +43,7 @@ public class TargetIsoformStatementPosition implements Comparable<TargetIsoformS
 
 	@Override
 	public int compareTo(TargetIsoformStatementPosition o) {
-		return isoformName.compareTo(o.isoformName);
+		return isoformAccession.compareTo(o.isoformAccession);
 	}
 
 	public String getName() {
