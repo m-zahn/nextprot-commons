@@ -77,20 +77,16 @@ public enum StatementField {
 	EXP_CONTEXT_ECO_MUTATION,
 	EXP_CONTEXT_ECO_ISS,
 	
-	//Publications
-	REFERENCE_PUBMED,
-	REFERENCE_CROSS_REF,
-	REFERENCE_CROSS_DOI,
-
+	//Publications or Xrefs (it corresponds to the resource id of an evidence)
+	REFERENCE_DATABASE, //Can be a Pubmed or another database
+	REFERENCE_ACCESSION,
 	
 	//EVIDENCE
 	ASSIGNED_BY,
 	ASSIGMENT_METHOD,
 	RESOURCE_TYPE,
-	EVIDENCE_RESOURCE_ID, //This is the ID of the resource in the database database only in the mapped statements
 	
 	DEBUG_NOTE, //Used for errors, warnings, debug information
-	
 	
 	RAW_STATEMENT_ID //Keep a reference to the Raw statement
 	;
