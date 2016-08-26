@@ -22,8 +22,7 @@ public enum StatementField {
 	
 	// SUBJECTS ///////////////////////////////////////////////////////
 	SUBJECT_STATEMENT_IDS(true, true),
-	
-	SUBJECT_ANNOTATION_IDS,
+	SUBJECT_ANNOTATION_IDS(true, true),
 
 	ANNOTATION_SUBJECT_SPECIES,
 	ANNOTATION_OBJECT_SPECIES,
@@ -39,7 +38,7 @@ public enum StatementField {
 	ANNOTATION_ID, 
 	ANNOTATION_NAME, 
 
-	IS_NEGATIVE(true, true), 
+	IS_NEGATIVE, 
 
 	EVIDENCE_QUALITY, 
 	EVIDENCE_INTENSITY,
@@ -63,7 +62,7 @@ public enum StatementField {
 	
 	// OBJECT ANNOTATION ///////////////////////////////////////////////////////////
 	OBJECT_STATEMENT_IDS(true, true),
-	OBJECT_ANNOTATION_IDS,
+	OBJECT_ANNOTATION_IDS(true, true),
 
 	OBJECT_ANNOT_ISO_UNAMES,
 	OBJECT_ANNOT_ENTRY_UNAMES,
@@ -85,8 +84,6 @@ public enum StatementField {
 	ASSIGNED_BY,
 	ASSIGMENT_METHOD,
 	RESOURCE_TYPE,
-	
-	DEBUG_NOTE, //Used for errors, warnings, debug information
 	
 	RAW_STATEMENT_ID //Keep a reference to the Raw statement
 	;

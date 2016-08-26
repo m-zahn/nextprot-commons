@@ -5,7 +5,6 @@ import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_ACCES
 import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_NAME;
 import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_TERMINOLOGY;
 import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.DEBUG_NOTE;
 import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
 import static org.nextprot.commons.statements.StatementField.ISOFORM_ACCESSION;
 import static org.nextprot.commons.statements.StatementField.LOCATION_BEGIN;
@@ -61,21 +60,6 @@ public class StatementBuilder {
 
 	public StatementBuilder addObject(Statement statement) {
 		addField(OBJECT_STATEMENT_IDS, statement.getStatementId());
-		return this;
-	}
-
-	public StatementBuilder addDebugNote(String note) {
-		if (note != null && note.length() > 0) {
-
-			if (!this.keyValues.containsKey(StatementField.DEBUG_NOTE.name())) {
-				addField(DEBUG_NOTE, "");
-			}
-
-			String debugNote = this.keyValues.get(StatementField.DEBUG_NOTE.name());
-			debugNote += note + "\n";
-
-			addField(DEBUG_NOTE, debugNote);
-		}
 		return this;
 	}
 

@@ -34,7 +34,6 @@ public class StatementUtil {
 					unicityFields.add(field);
 				}
 			}else if (type.equals(AnnotationType.STATEMENT)) { // All fields for the statement
-
 				if(!field.equals(StatementField.STATEMENT_ID)){
 					unicityFields.add(field);
 				}
