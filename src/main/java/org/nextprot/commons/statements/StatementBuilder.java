@@ -9,6 +9,7 @@ import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
 import static org.nextprot.commons.statements.StatementField.ISOFORM_ACCESSION;
 import static org.nextprot.commons.statements.StatementField.LOCATION_BEGIN;
 import static org.nextprot.commons.statements.StatementField.LOCATION_END;
+import static org.nextprot.commons.statements.StatementField.OBJECT_ANNOTATION_IDS;
 import static org.nextprot.commons.statements.StatementField.OBJECT_STATEMENT_IDS;
 import static org.nextprot.commons.statements.StatementField.SOURCE;
 import static org.nextprot.commons.statements.StatementField.SUBJECT_STATEMENT_IDS;
@@ -35,6 +36,11 @@ public class StatementBuilder {
 		return sb;
 	}
 
+	public StatementBuilder removeField(StatementField statementField) {
+		this.keyValues.remove(statementField.name());
+		return this;
+	}
+	
 	public StatementBuilder addField(StatementField statementField, String statementValue) {
 		this.keyValues.put(statementField.name(), statementValue);
 		return this;
@@ -43,28 +49,52 @@ public class StatementBuilder {
 	public StatementBuilder addSubjects(Collection<Statement> statements) {
 
 		Set<String> sortedStatementIds = new TreeSet<String>();
+		Set<String> sortedAnnotationIds = new TreeSet<String>();
 
 		Iterator<Statement> statementsIt = statements.iterator();
 
 		while (statementsIt.hasNext()) {
 			Statement s = statementsIt.next();
 			sortedStatementIds.add(s.getStatementId());
+			if(s.getAnnotationId() != null){
+				sortedAnnotationIds.add(s.getAnnotationId());
+			}else {
+				if(!sortedAnnotationIds.isEmpty()){
+					throw new RuntimeException("Found a null annotation id when one was already set for statement id: " + s.getStatementId());
+				}
+			}
 		}
 		
 		String subjectStatemendIds = StringUtils.mkString(sortedStatementIds, ",");
+		String subjectAnnotationIds = StringUtils.mkString(sortedAnnotationIds, ",");
 
 		addField(SUBJECT_STATEMENT_IDS, subjectStatemendIds);
+		
+		if(!subjectAnnotationIds.isEmpty()){
+			addField(StatementField.SUBJECT_ANNOTATION_IDS, subjectAnnotationIds);
+		}
 
 		return this;
 	}
 
 	public StatementBuilder addObject(Statement statement) {
 		addField(OBJECT_STATEMENT_IDS, statement.getStatementId());
+		if(statement.getAnnotationId() != null){
+			addField(OBJECT_ANNOTATION_IDS, statement.getAnnotationId());
+			
+		}
 		return this;
 	}
 
 	public Statement build() {
 		Statement rs = new Statement(keyValues);
+		rs.putValue(StatementField.STATEMENT_ID, StatementUtil.computeAndGetAnnotationId(rs, AnnotationType.STATEMENT));
+		return rs;
+	}
+	
+	public Statement buildWithAnnotationHash(AnnotationType type) {
+		Statement rs = new Statement(keyValues);
+		rs.putValue(StatementField.ANNOTATION_ID, StatementUtil.computeAndGetAnnotationId(rs, type));
 		rs.putValue(StatementField.STATEMENT_ID, StatementUtil.computeAndGetAnnotationId(rs, AnnotationType.STATEMENT));
 		return rs;
 	}

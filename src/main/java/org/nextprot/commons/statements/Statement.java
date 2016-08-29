@@ -34,9 +34,9 @@ public class Statement extends TreeMap<String, String>{
 		return put(field.name(), value);
 	}
 	
-	void computeAndSetAnnotationIds(AnnotationType annotationType){
+/*	void computeAndSetAnnotationIds(AnnotationType annotationType){
 		putValue(StatementField.ANNOTATION_ID, StatementUtil.computeAndGetAnnotationId(this,annotationType));
-	}
+	}*/
 
 	public String getSubjectStatementIds() {
 		return getValue(StatementField.SUBJECT_STATEMENT_IDS);
@@ -50,6 +50,10 @@ public class Statement extends TreeMap<String, String>{
 	
 	public String getStatementId() {
 		return this.getValue(StatementField.STATEMENT_ID);
+	}
+	
+	public String getAnnotationId() {
+		return this.getValue(StatementField.ANNOTATION_ID);
 	}
 	
 	public String getObjectStatementId() {

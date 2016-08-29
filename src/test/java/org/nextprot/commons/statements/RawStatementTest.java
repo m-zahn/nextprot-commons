@@ -3,7 +3,6 @@ package org.nextprot.commons.statements;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,15 +44,14 @@ public class RawStatementTest {
 				.addField(StatementField.GENE_NAME, "apc")
 				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
 				.addCompulsaryFields("AAA", "BBB", "CCC", defaultQuality)
-				.addSourceInfo("CAVA-VP90999", "BED").build();
+				.addSourceInfo("CAVA-VP90999", "BED").buildWithAnnotationHash(AnnotationType.ISOFORM);
 		Statement rs2 = StatementBuilder.createNew()
 				.addField(StatementField.NEXTPROT_ACCESSION, "NX_P25054")
 				.addField(StatementField.GENE_NAME, "apc")
 				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
 				.addCompulsaryFields("AAA", "BBB", "CCC", defaultQuality)
-				.addSourceInfo("XPTO", "Caviar").build();
+				.addSourceInfo("XPTO", "Caviar").buildWithAnnotationHash(AnnotationType.ISOFORM);
 
-		StatementUtil.computeAndSetAnnotationIdsForRawStatements(Arrays.asList(rs1, rs2), AnnotationType.ISOFORM);
 		assertNotEquals(rs1, rs2); 
 		assertEquals(rs1.getValue(StatementField.ANNOTATION_ID), rs2.getValue(StatementField.ANNOTATION_ID));
 	}

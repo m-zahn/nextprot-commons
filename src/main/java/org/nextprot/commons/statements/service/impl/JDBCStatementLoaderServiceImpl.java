@@ -33,19 +33,19 @@ public class JDBCStatementLoaderServiceImpl implements StatementLoaderService {
 	
 	@Override
 	public void loadRawStatementsForSource(Set<Statement> statements, NextProtSource source) throws SQLException {
-		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.STATEMENT);
+		//StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.STATEMENT);
 		load(statements, rawTable, source);
 	}
 
 	@Override
 	public void loadStatementsMappedToEntrySpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) throws SQLException {
-		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ENTRY);
+		//StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ENTRY);
 		load(statements, entryTable, source);
 	}
 	
 	@Override
 	public void loadStatementsMappedToIsoSpecAnnotationsForSource(Set<Statement> statements, NextProtSource source) throws SQLException {
-		StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
+		//StatementUtil.computeAndSetAnnotationIdsForRawStatements(statements, AnnotationType.ISOFORM);
 		load(statements, isoTable, source);
 	}
 	

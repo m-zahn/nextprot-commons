@@ -78,7 +78,7 @@ public class StatementUtil {
 	}
 		
 		
-	public static void computeAndSetAnnotationIdsForRawStatements(Collection<Statement> statements, AnnotationType annotationType){
+	/*public static void computeAndSetAnnotationIdsForRawStatements(Collection<Statement> statements, AnnotationType annotationType){
 		
 		checkStatementsValidity(statements);
 		
@@ -108,7 +108,7 @@ public class StatementUtil {
 			//Compute annotation ids for this complex statement
 			complexStatement.computeAndSetAnnotationIds(annotationType);
 		}
-	}
+	}*/
 	
 	
 	
