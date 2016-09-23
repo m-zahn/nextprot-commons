@@ -2,7 +2,6 @@ package org.nextprot.commons.statements;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +24,7 @@ public class StatementUtil {
 			// According with
 			// https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
 
-			if (type.equals(AnnotationType.ISOFORM)) {
-				if (field.isIsoUnicity()) {
-					unicityFields.add(field);
-				}
-			} else if (type.equals(AnnotationType.ENTRY)) {
+			 if (type.equals(AnnotationType.ENTRY)) {
 				if (field.isEntryUnicity()) {
 					unicityFields.add(field);
 				}
@@ -57,7 +52,7 @@ public class StatementUtil {
 		return MD5Algo.computeMD5(payload.toString());
 
 	}
-	
+
 	static void checkStatementsValidity(Collection<Statement> statements){
 		checkQuality(statements);
 	}

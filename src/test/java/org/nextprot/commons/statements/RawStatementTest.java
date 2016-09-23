@@ -42,15 +42,15 @@ public class RawStatementTest {
 		Statement rs1 = StatementBuilder.createNew()
 				.addField(StatementField.NEXTPROT_ACCESSION, "NX_P25054")
 				.addField(StatementField.GENE_NAME, "apc")
-				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
 				.addCompulsaryFields("AAA", "BBB", "CCC", defaultQuality)
-				.addSourceInfo("CAVA-VP90999", "BED").buildWithAnnotationHash(AnnotationType.ISOFORM);
+   	    	    .addField(StatementField.TARGET_ISOFORMS, "[]")
+				.addSourceInfo("CAVA-VP90999", "BED").buildWithAnnotationHash(AnnotationType.ENTRY);
 		Statement rs2 = StatementBuilder.createNew()
 				.addField(StatementField.NEXTPROT_ACCESSION, "NX_P25054")
 				.addField(StatementField.GENE_NAME, "apc")
-				.addField(StatementField.ISOFORM_ACCESSION, "NX_P25054-1")
 				.addCompulsaryFields("AAA", "BBB", "CCC", defaultQuality)
-				.addSourceInfo("XPTO", "Caviar").buildWithAnnotationHash(AnnotationType.ISOFORM);
+   	    	    .addField(StatementField.TARGET_ISOFORMS, "[]")
+				.addSourceInfo("XPTO", "Caviar").buildWithAnnotationHash(AnnotationType.ENTRY);
 
 		assertNotEquals(rs1, rs2); 
 		assertEquals(rs1.getValue(StatementField.ANNOTATION_ID), rs2.getValue(StatementField.ANNOTATION_ID));

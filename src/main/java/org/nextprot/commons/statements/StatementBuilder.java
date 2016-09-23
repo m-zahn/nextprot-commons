@@ -6,7 +6,6 @@ import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_NAME;
 import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_TERMINOLOGY;
 import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_ACCESSION;
 import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ISOFORM_ACCESSION;
 import static org.nextprot.commons.statements.StatementField.LOCATION_BEGIN;
 import static org.nextprot.commons.statements.StatementField.LOCATION_END;
 import static org.nextprot.commons.statements.StatementField.OBJECT_ANNOTATION_IDS;
@@ -106,7 +105,6 @@ public class StatementBuilder {
 
 	public StatementBuilder addCompulsaryFields(String entryAccession, String isoformAccession, String annotationCategory, QualityQualifier quality) {
 		addField(ENTRY_ACCESSION, entryAccession);
-		addField(ISOFORM_ACCESSION, isoformAccession);
 		addField(ANNOTATION_CATEGORY, annotationCategory);
 		addQuality(quality);
 		return this;
