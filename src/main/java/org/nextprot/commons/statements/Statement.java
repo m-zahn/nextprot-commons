@@ -3,8 +3,6 @@ package org.nextprot.commons.statements;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.nextprot.commons.statements.constants.AnnotationType;
-
 /**
  * DO NOT ADD public setters on this class.
  * A StatementID is computed based on the fields when build() is invoked
@@ -13,8 +11,9 @@ import org.nextprot.commons.statements.constants.AnnotationType;
  *
  */
 public class Statement extends TreeMap<String, String>{
-	
+
 	private static final long serialVersionUID = -4723168061980820149L;
+	private boolean isProcessed = false;
 	
 	//Needed for serialization in Play?
 	public Statement() {
@@ -62,6 +61,14 @@ public class Statement extends TreeMap<String, String>{
 	
 	public boolean hasModifiedSubject() {
 		return (getValue(StatementField.SUBJECT_STATEMENT_IDS) != null);
+	}
+
+	public boolean isProcessed() {
+		return isProcessed;
+	}
+
+	public void processed() {
+		this.isProcessed = true;
 	}
 	
 
