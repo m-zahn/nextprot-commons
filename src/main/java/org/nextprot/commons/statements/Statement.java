@@ -70,6 +70,15 @@ public class Statement extends TreeMap<String, String>{
 	public void processed() {
 		this.isProcessed = true;
 	}
-	
+
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		for (String s : this.keySet()) {
+			sb.append("\t\"" + s + "\": \"" + this.get(s).replace("\"", "''") + "\",\n");
+		}
+		sb.append("}");
+		return sb.toString();
+	}
 
 }
