@@ -33,7 +33,7 @@ public class TargetIsoformDeserializationTest {
 	public void testBackWardCompatibility(){
 
 		String jsonString1 = "[{\"isoformAccession\":\"NX_P52701-1\",\"specificity\":\"UNKNOWN\",\"begin\":null,\"end\":null,\"name\":\"MSH6-isoGTBP-N-p.Thr1219Asp\"},{\"isoformAccession\":\"NX_P52701-3\",\"specificity\":\"UNKNOWN\",\"begin\":null,\"end\":null,\"name\":\"MSH6-iso3-p.Thr1089Asp\"},{\"isoformAccession\":\"NX_P52701-4\",\"specificity\":\"UNKNOWN\",\"begin\":null,\"end\":null,\"name\":\"MSH6-iso4-p.Thr917Asp\"}]";
-		String jsonString2 = "[{\"isoformAccession\":\"NX_P52701-1\",\"specificity\":\"UNKNOWN\",\"begin\":5,\"end\":10,\"name\":\"MSH6-isoGTBP-N-p.Thr1219Asp\"},{\"isoformAccession\":\"NX_P52701-3\",\"specificity\":\"UNKNOWN\",\"begin\":null,\"end\":null,\"name\":\"MSH6-iso3-p.Thr1089Asp\"},{\"isoformAccession\":\"NX_P52701-4\",\"specificity\":\"UNKNOWN\",\"begin\":null,\"end\":null,\"name\":\"MSH6-iso4-p.Thr917Asp\"}]";
+		String jsonString2 = "[{\"isoformAccession\":\"NX_P52701-1\",\"specificity\":null,\"begin\":5,\"end\":10,\"name\":\"MSH6-isoGTBP-N-p.Thr1219Asp\"},{\"isoformAccession\":\"NX_P52701-3\",\"specificity\":\"UNKNOWN\",\"begin\":null,\"end\":null,\"name\":\"MSH6-iso3-p.Thr1089Asp\"},{\"isoformAccession\":\"NX_P52701-4\",\"specificity\":\"UNKNOWN\",\"begin\":null,\"end\":null,\"name\":\"MSH6-iso4-p.Thr917Asp\"}]";
 
 		TargetIsoformSet tis1 = TargetIsoformSet.deSerializeFromJsonString(jsonString1);
 		TargetIsoformSet tis2 = TargetIsoformSet.deSerializeFromJsonString(jsonString2);
@@ -42,7 +42,9 @@ public class TargetIsoformDeserializationTest {
 		Assert.assertEquals(tis1.size(), 3);
 		Assert.assertEquals(tis2.size(), 3);
 		Assert.assertTrue(tis2.iterator().next().getBegin().equals(5));
-		Assert.assertTrue(tis1.iterator().next().getBegin() == null);
+		Assert.assertNull(tis1.iterator().next().getBegin());
+		Assert.assertNull(tis2.iterator().next().getSpecificity());
+		Assert.assertEquals(tis1.iterator().next().getSpecificity(), "UNKNOWN");
 
 	}
 
