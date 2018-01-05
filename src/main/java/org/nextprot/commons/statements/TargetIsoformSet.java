@@ -29,9 +29,9 @@ public class TargetIsoformSet extends TreeSet<TargetIsoformStatementPosition> {
 		array.forEach(a -> {
 			JsonObject jo = a.asObject();
 
-			String name = verifyValue(jo.getString("name", "NULL"));
-			String isoformAccession = verifyValue(jo.getString("isoformAccession", "NULL"));
-			String specificity = verifyValue(jo.getString("specificity", "NULL"));
+			String name = getStringBackwardCompatibleFormat(jo, "name");
+			String isoformAccession = getStringBackwardCompatibleFormat(jo,"isoformAccession");
+			String specificity = getStringBackwardCompatibleFormat(jo, "specificity");
 
 			Integer begin = getIntBackwardCompatibleFormat(jo, "begin");
 			Integer end = getIntBackwardCompatibleFormat(jo, "end");
@@ -41,6 +41,24 @@ public class TargetIsoformSet extends TreeSet<TargetIsoformStatementPosition> {
 		});
 
 		return tis;
+
+	}
+
+
+	private static String getStringBackwardCompatibleFormat(JsonObject jo, String name){
+
+		try {
+			String value =  jo.getString(name, "NULL");
+			if(value.equals("NULL")) return null;
+			else return value;
+
+		}catch (UnsupportedOperationException e) {
+			JsonValue val = jo.get(name);
+			if(val == null || val.toString().equalsIgnoreCase("null")) {
+				return null;
+			}
+			else throw e;
+		}
 
 	}
 
@@ -60,17 +78,6 @@ public class TargetIsoformSet extends TreeSet<TargetIsoformStatementPosition> {
 			else throw e;
 		}
 
-	}
-
-
-	private static Integer verifyValue(int value){
-		if(value == -1) return null;
-		else return value;
-	}
-
-	private static String verifyValue(String value){
-		if(value.equals("NULL")) return null;
-		else return value;
 	}
 
 	private static void addIfPresent(JsonObject jo, String name, Integer value){
