@@ -3,6 +3,7 @@ package org.nextprot.commons.statements;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -32,8 +33,8 @@ public class TargetIsoformSet extends TreeSet<TargetIsoformStatementPosition> {
 			String isoformAccession = verifyValue(jo.getString("isoformAccession", "NULL"));
 			String specificity = verifyValue(jo.getString("specificity", "NULL"));
 
-			Integer begin = verifyValue(jo.getInt("begin", -1));
-			Integer end = verifyValue(jo.getInt("end", -1));
+			Integer begin = getIntBackwardCompatibleFormat(jo, "begin");
+			Integer end = getIntBackwardCompatibleFormat(jo, "end");
 
 			tis.add(new TargetIsoformStatementPosition(isoformAccession, begin, end, specificity, name));
 
@@ -42,6 +43,25 @@ public class TargetIsoformSet extends TreeSet<TargetIsoformStatementPosition> {
 		return tis;
 
 	}
+
+	private static Integer getIntBackwardCompatibleFormat(JsonObject jo, String name){
+
+		try {
+			Integer value =  jo.getInt(name, -1);
+			if(value == -1) {
+				return null;
+			}else return value;
+
+		}catch (UnsupportedOperationException e) {
+			JsonValue val = jo.get(name);
+			if(val == null || val.toString().equalsIgnoreCase("null")) {
+				return null;
+			}
+			else throw e;
+		}
+
+	}
+
 
 	private static Integer verifyValue(int value){
 		if(value == -1) return null;
