@@ -38,7 +38,6 @@ public class TargetIsoformDeserializationTest {
 		TargetIsoformSet tis1 = TargetIsoformSet.deSerializeFromJsonString(jsonString1);
 		TargetIsoformSet tis2 = TargetIsoformSet.deSerializeFromJsonString(jsonString2);
 
-
 		Assert.assertEquals(tis1.size(), 3);
 		Assert.assertEquals(tis2.size(), 3);
 		Assert.assertTrue(tis2.iterator().next().getBegin().equals(5));
