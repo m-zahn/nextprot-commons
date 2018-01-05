@@ -17,15 +17,14 @@ public class TargetIsoformDeserializationTest {
 
 
 		String jsonString = tis.serializeToJsonString();
-		System.out.println(jsonString);
 		TargetIsoformSet tis2 = TargetIsoformSet.deSerializeFromJsonString(jsonString);
+
 
 
 		Assert.assertEquals(tis, tis2);
 
 
 	}
-	
 
 	
 }

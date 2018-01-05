@@ -4,18 +4,16 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.nextprot.commons.statements.constants.AnnotationType;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class StatementUtilTest {
 
 	@Test
-	public void testRawStatementEquals() throws JsonParseException, JsonMappingException, IOException {
+	public void testRawStatementEquals() throws IOException {
 		
 		
 		//Copied directly from kant.isb-sib.ch:9000/bioeditor/gene/msh6/statements
@@ -100,12 +98,21 @@ public class StatementUtilTest {
 	
 	
 	
-	Statement buildStatementFromJsonString(String jsonString) throws JsonParseException, JsonMappingException, IOException{
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, String> subMap1;
-		subMap1 = objectMapper.readValue(jsonString, Map.class);
-		return StatementBuilder.createNew().addMap(subMap1).build();
+	Statement buildStatementFromJsonString(String jsonString) throws IOException{
+
+		JsonObject jo = Json.parse(jsonString).asObject();
+
+		StatementBuilder sb = StatementBuilder.createNew();
+
+		Arrays.asList(StatementField.values()).forEach(sf -> {
+			String value = jo.getString(sf.name(), null);
+			if(value != null){
+				sb.addField(sf, value);
+			}
+		});
+
+
+		return sb.build();
 		
 	}
 
