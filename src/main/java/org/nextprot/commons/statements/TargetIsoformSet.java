@@ -93,17 +93,15 @@ public class TargetIsoformSet extends TreeSet<TargetIsoformStatementPosition> {
 	public String serializeToJsonString() {
 
 		JsonArray array = Json.array();
-		Iterator<TargetIsoformStatementPosition> it = this.iterator();
-		while(it.hasNext()){
-			TargetIsoformStatementPosition tisp = it.next();
+		for (TargetIsoformStatementPosition tisp : this) {
 			JsonObject jo = Json.object();
 
-			addIfPresent(jo, "name", tisp.getName());
 			addIfPresent(jo, "isoformAccession", tisp.getIsoformAccession());
 			addIfPresent(jo, "specificity", tisp.getSpecificity());
 
 			addIfPresent(jo, "begin", tisp.getBegin());
 			addIfPresent(jo, "end", tisp.getEnd());
+			addIfPresent(jo, "name", tisp.getName());
 
 			array.add(jo);
 
