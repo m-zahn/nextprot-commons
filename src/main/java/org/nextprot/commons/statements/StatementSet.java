@@ -53,7 +53,7 @@ public class StatementSet{
 
 	public StatementSet filterNot(StatementField field, String value) {
 		return new StatementSet(statements.stream()
-				.filter(s -> s.getValue(field) != value)
+				.filter(s -> !value.equals(s.getValue(field)))
 				.collect(Collectors.toSet()));
 	}
 
