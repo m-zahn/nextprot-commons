@@ -64,4 +64,16 @@ public class RawStatementTest {
 
 		assertEquals(rs1, rs2);
 	}
+
+
+	@Test
+	public void testDebugInfo() {
+
+		Statement rs1 = StatementBuilder.createNew().addCompulsaryFields("AAA", "BBB", "CCC", defaultQuality).addDebugInfo("Oh yeah").build();
+		Statement rs2 = StatementBuilder.createNew().addMap(rs1).addDebugInfo("oh oh").build();
+
+		assertEquals(rs1.getValue(StatementField.DEBUG_INFO), "Oh yeah");
+		assertEquals(rs2.getValue(StatementField.DEBUG_INFO), "oh oh");
+
+	}
 }

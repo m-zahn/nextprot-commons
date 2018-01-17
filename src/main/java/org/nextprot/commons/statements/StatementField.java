@@ -82,8 +82,11 @@ public enum StatementField {
 	ASSIGMENT_METHOD,
 	RESOURCE_TYPE,
 	
-	RAW_STATEMENT_ID //Keep a reference to the Raw statement
-	;
+	RAW_STATEMENT_ID, //Keep a reference to the Raw statement
+
+
+	//DEBUG_INFO
+	DEBUG_INFO;
 	
 
 	private boolean entryUnicity = false;
