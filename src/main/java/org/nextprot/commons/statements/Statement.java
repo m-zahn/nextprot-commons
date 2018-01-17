@@ -29,6 +29,10 @@ public class Statement extends TreeMap<String, String>{
 		return get(field.name());
 	}
 
+	public String getDebugInfo() {
+		return get(StatementField.DEBUG_INFO.name());
+	}
+
 	String putValue(StatementField field, String value) {
 		return put(field.name(), value);
 	}

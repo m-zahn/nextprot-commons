@@ -1,20 +1,5 @@
 package org.nextprot.commons.statements;
 
-import static org.nextprot.commons.statements.StatementField.ANNOTATION_CATEGORY;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_NAME;
-import static org.nextprot.commons.statements.StatementField.ANNOT_CV_TERM_TERMINOLOGY;
-import static org.nextprot.commons.statements.StatementField.ANNOT_SOURCE_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.ENTRY_ACCESSION;
-import static org.nextprot.commons.statements.StatementField.LOCATION_BEGIN;
-import static org.nextprot.commons.statements.StatementField.LOCATION_END;
-import static org.nextprot.commons.statements.StatementField.OBJECT_ANNOTATION_IDS;
-import static org.nextprot.commons.statements.StatementField.OBJECT_STATEMENT_IDS;
-import static org.nextprot.commons.statements.StatementField.SOURCE;
-import static org.nextprot.commons.statements.StatementField.SUBJECT_STATEMENT_IDS;
-import static org.nextprot.commons.statements.StatementField.VARIANT_ORIGINAL_AMINO_ACID;
-import static org.nextprot.commons.statements.StatementField.VARIANT_VARIATION_AMINO_ACID;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,6 +10,8 @@ import java.util.TreeSet;
 import org.nextprot.commons.constants.QualityQualifier;
 import org.nextprot.commons.statements.constants.AnnotationType;
 import org.nextprot.commons.utils.StringUtils;
+
+import static org.nextprot.commons.statements.StatementField.*;
 
 public class StatementBuilder {
 
@@ -131,6 +118,18 @@ public class StatementBuilder {
 	public StatementBuilder addSourceInfo(String sourceAccession, String sourceDatabase) {
 		addField(ANNOT_SOURCE_ACCESSION, sourceAccession);
 		addField(SOURCE, sourceDatabase);
+		return this;
+	}
+
+
+	public StatementBuilder addDebugInfo(String info) {
+		addField(DEBUG_INFO, info);
+		/*		if(!this.keyValues.containsKey(DEBUG_INFO.name())){
+			addField(DEBUG_INFO, info);
+		}else {
+			String msg = this.keyValues.get(DEBUG_INFO.name());
+			addField(DEBUG_INFO, msg + "; " + info);
+		}*/
 		return this;
 	}
 
