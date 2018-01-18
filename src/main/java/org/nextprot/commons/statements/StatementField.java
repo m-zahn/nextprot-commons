@@ -2,6 +2,7 @@ package org.nextprot.commons.statements;
 
 public enum StatementField {
 
+	//Generated automatically from the builder when all fields are set	
 	STATEMENT_ID, 
 	
 	// According with https://calipho.isb-sib.ch/wiki/display/cal/Raw+statements+specifications
