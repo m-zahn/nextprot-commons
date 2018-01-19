@@ -7,7 +7,6 @@ See: http://www.nextprot.org/
 #neXtProt commons
 
 This project is for internal use.
-
 It contains classes shared between the loaders pipeline and the web API.
 
 ##Deployment in dev
