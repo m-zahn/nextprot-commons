@@ -2,7 +2,7 @@ package org.nextprot.commons.statements.constants;
 
 public enum NextProtSource {
 
-	BioEditor ("neXtProt", "http://kant.isb-sib.ch:9001/bioeditor");
+	BioEditor ("neXtProt", "http://kant.sib.swiss:9001/bioeditor");
 	
 
 	private String sourceName;
